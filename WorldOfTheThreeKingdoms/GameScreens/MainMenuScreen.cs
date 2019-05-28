@@ -269,10 +269,12 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                     MODs = MODs.Union(new MOD[] { mod }).NullToEmptyArray();
                 }
             }
-
+            
+            //读取设置中的MOD版本
             MOD currentMod = MODs.FirstOrDefault(x => x.ID.Equals(Setting.Current.MOD));
             if (currentMod == null)
             {
+                //默认用原版MOD
                 currentMod = MODs[0];
                 Setting.Current.MOD = currentMod.ID;
             }

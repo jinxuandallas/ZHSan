@@ -10,15 +10,34 @@ namespace GameManager
 {
     public struct TextureRecs
     {
+        /// <summary>
+        /// Cache类型
+        /// </summary>
         public string CacheType;
+        /// <summary>
+        /// 扩展名
+        /// </summary>
         public string Ext;
+        /// <summary>
+        /// 宽度
+        /// </summary>
         public int Width;
+        /// <summary>
+        /// 高度
+        /// </summary>
         public int Height;
+        /// <summary>
+        /// 材质的矩形集合
+        /// </summary>
         public Rectangle[] Recs;
     }
 
     public static class TextureRecsManager
     {
+        /// <summary>
+        /// 读取材质配置文件
+        /// </summary>
+        /// <returns></returns>
         public static string ReadTextureMaps()
         {
             return Platform.Current.LoadText("Content/Data/TextureRecs.txt");
@@ -38,6 +57,15 @@ namespace GameManager
             }
         }
 
+        /// <summary>
+        /// 生成一个按钮的所有矩形区域
+        /// </summary>
+        /// <param name="index">按钮的index</param>
+        /// <param name="repeat">重复的次数</param>
+        /// <param name="width">按钮宽度</param>
+        /// <param name="imageWidth">总宽度</param>
+        /// <param name="height">按钮高度</param>
+        /// <returns>返回生成的矩形集合</returns>
         public static Rectangle[] FindOneTexRectangles(int index, int repeat, int width, int imageWidth, int height)
         {
             int alreadyWidth = index * repeat * width;
@@ -53,6 +81,11 @@ namespace GameManager
             return recs.ToArray();
         }
 
+        /// <summary>
+        /// 读取一行配置中的材质信息
+        /// </summary>
+        /// <param name="dic">返回存储材质信息的字典</param>
+        /// <param name="oneMetas">一行配置的字符串材质元信息</param>
         public static void FindTextureRectangles(Dictionary<string, TextureRecs> dic, string[] oneMetas)
         {
             string name = oneMetas[0].Trim();
@@ -85,6 +118,10 @@ namespace GameManager
             return textureDic;
         }
 
+        /// <summary>
+        /// 获取所有材质键值
+        /// </summary>
+        /// <returns>返回包含材质的键值对字典</returns>
         public static Dictionary<string, TextureRecs> AllTextureRectangles()
         {
             string[] oneTexs = ReadTextureMaps().Split(new string[] { ";" }, StringSplitOptions.None);
