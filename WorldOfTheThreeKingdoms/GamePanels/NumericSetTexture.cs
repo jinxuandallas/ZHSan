@@ -163,6 +163,9 @@ namespace GamePanels
 
     }
 
+    /// <summary>
+    /// Êý×Ö¹ö¶¯Ìõ
+    /// </summary>
     public class NumericSetTextureF
     {
         public ButtonTexture leftTexture;

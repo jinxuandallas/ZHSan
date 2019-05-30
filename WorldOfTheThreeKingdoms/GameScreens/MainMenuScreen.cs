@@ -977,6 +977,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btConfigList2.Add(btOne);
 
+            //设置数字滚动条
             nstMaxExperience = new NumericSetTextureF(1, 300000, 300000, null, new Vector2(left1 + 200, heightBase + height * 1f), true)
             {
                 IntMode = true,
@@ -3128,6 +3129,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
         }
 
+        /// <summary>
+        /// 初始化设置界面按钮选择
+        /// </summary>
         void InitSetting()
         {
             var btSimple = btSettingList.FirstOrDefault(bt => bt.ID == "简体中文");
