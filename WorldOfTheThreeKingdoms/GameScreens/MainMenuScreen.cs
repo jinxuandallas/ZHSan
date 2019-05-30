@@ -273,6 +273,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             Current = this;
 
+            //添加按钮
             btList = new List<ButtonTexture>() { };
 
             var btOne = new ButtonTexture(@"Content\Textures\Resources\Start\Menu", "New", new Vector2(100 + currentMod.xOffset, 600 + currentMod.yOffset));
@@ -336,7 +337,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             btList.Add(btOne);
 
             //New
-
+            //添加脚本按钮
             btScenarioList = new List<ButtonTexture>();
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\ReadyButton", "OK", new Vector2(800 + 220, 615));
             btOne.OnButtonPress += (sender, e) =>
@@ -448,6 +449,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btSaveList.Add(btOne);
 
+            //添加设置按钮
             lbSettingList = new List<LinkButton>();
             var lbOne = new LinkButton("基本")
             {
