@@ -3248,7 +3248,6 @@ namespace GameObjects
                         {
                             foreach (Person q in sending.persons)
                             {
-                                if (p.Hates(q)) continue;
                                 if (GameObject.Chance((p.Uncruelty * 5 + q.Glamour / 2) / 2))
                                 {
                                     p.AdjustRelation(q, 0.5f / Math.Max(1, sending.persons.Count), 2);
@@ -3275,7 +3274,6 @@ namespace GameObjects
                         foreach (Person q in sending.persons)
                         {
                             if (p == q) continue;
-                            if (p.Hates(q)) continue;
                             if (GameObject.Chance(p.Uncruelty * 5 + q.Glamour / 2))
                             {
                                 p.AdjustRelation(q, 1f / Math.Max(1, sending.persons.Count), 3);
@@ -8768,7 +8766,7 @@ namespace GameObjects
 
         private void PlaySound(string soundFileLocation, bool looping)
         {
-            if (Session.GlobalVariables.PlayBattleSound)  // && File.Exists(soundFileLocation))
+            if (Setting.Current.GlobalVariables.PlayBattleSound)  // && File.Exists(soundFileLocation))
             {
                 this.SoundFileLocation = soundFileLocation;
                 this.PlaySound();
@@ -9389,6 +9387,24 @@ namespace GameObjects
             {
                 this.defence = (int)(this.defence * Session.Parameters.AITroopDefenceRate);
             }
+            int maxRelation = 0;
+            int minRelation = 0;
+            foreach (Person p in this.Persons)
+            {
+                if (p == this.Leader) continue;
+                int thisRelation = p.GetRelation(this.Leader) + this.Leader.GetRelation(p);
+                if (thisRelation > 0 && thisRelation > maxRelation)
+                {
+                    maxRelation = thisRelation;
+                }
+                if (thisRelation < 0 && thisRelation < minRelation)
+                {
+                    minRelation = thisRelation;
+                }
+            }
+            int rel = Math.Max(-5000, Math.Min(5000, maxRelation + minRelation * 4));
+            this.offence = (int)(this.offence * (rel / 10000.0f + 1));
+
             if (this.defence <= 0)
             {
                 this.defence = 1;
@@ -9509,6 +9525,25 @@ namespace GameObjects
             {
                 this.offence = (int)(this.offence * Session.Parameters.AITroopOffenceRate);
             }
+
+            int maxRelation = 0;
+            int minRelation = 0;
+            foreach (Person p in this.Persons)
+            {
+                if (p == this.Leader) continue;
+                int thisRelation = p.GetRelation(this.Leader) + this.Leader.GetRelation(p);
+                if (thisRelation > 0 && thisRelation > maxRelation)
+                {
+                    maxRelation = thisRelation;
+                }
+                if (thisRelation < 0 && thisRelation < minRelation)
+                {
+                    minRelation = thisRelation;
+                }
+            }
+            int rel = Math.Max(-5000, Math.Min(5000, maxRelation + minRelation * 4));
+            this.offence = (int)(this.offence * (rel / 10000.0f + 1));
+
             if (this.offence <= 0)
             {
                 this.offence = 1;
