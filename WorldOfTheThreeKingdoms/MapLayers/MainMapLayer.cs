@@ -33,6 +33,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens.ScreenLayers
         
         private int leftEdge = 0;
 
+        /// <summary>
+        /// 地形列表
+        /// </summary>
         private List<int> TerrainList = new List<int>();
         public Tile[,] Tiles;
         public MapTile[,] MapTiles;

@@ -374,7 +374,13 @@ namespace Platforms
 
         #region 處理文件夾事宜
 
-
+        /// <summary>
+        /// 获取相应地址下的部分或全部目录地址
+        /// </summary>
+        /// <param name="dir">原地址</param>
+        /// <param name="all">是否获取全部目录</param>
+        /// <param name="full">是否完整路径</param>
+        /// <returns></returns>
         public override string[] GetDirectories(string dir, bool all, bool full)
         {
             if (Directory.Exists(dir))

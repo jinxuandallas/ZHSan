@@ -2899,6 +2899,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         //    return sce;
         //}
 
+        /// <summary>
+        /// 初始化设置
+        /// </summary>
         void InitConfig()
         {
             //基本

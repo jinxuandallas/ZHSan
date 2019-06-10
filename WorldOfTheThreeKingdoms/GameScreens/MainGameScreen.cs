@@ -62,6 +62,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         private float scrollSpeedScaleSpeedy;
         private SelectingLayer selectingLayer;
         public Point SelectorStartPosition;
+        /// <summary>
+        /// 部队列表
+        /// </summary>
         public TroopList SelectorTroops;
         public GameTextures Textures;
         

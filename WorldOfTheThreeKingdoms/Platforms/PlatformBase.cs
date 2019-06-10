@@ -553,6 +553,11 @@ namespace Platforms
 
         #region 用戶文件夾處理
 
+        /// <summary>
+        /// 将资源地址转换为当前MOD下的地址
+        /// </summary>
+        /// <param name="res">资源地址</param>
+        /// <returns>返回转换后的地址</returns>
         public string GetMODFile(string res)
         {
             //res = res.Replace("\\", "/");
@@ -603,6 +608,12 @@ namespace Platforms
             return files;
         }
 
+        /// <summary>
+        /// 根据MOD获取相应文件夹下的第一层目录
+        /// </summary>
+        /// <param name="dir">原地址</param>
+        /// <param name="full">地址是否是完整路径</param>
+        /// <returns></returns>
         public string[] GetMODDirectories(string dir, bool full)
         {
             string[] dirs = null;
@@ -614,12 +625,15 @@ namespace Platforms
             }
             else
             {
+                //将对应原版的Content目录替换成相应的MOD目录对应地址
                 var mod = dir.Replace("Content", "MODs\\" + Setting.Current.MODRuntime);
 
+                //获取MOD地址下相应文件夹下的第一层目录地址
                 dirs = GetDirectories(mod, false, full).NullToEmptyArray();
 
                 if (dirs.Length == 0)
                 {
+                    //如果没有目录则获取原地址文件夹下的所有目录
                     dirs = GetDirectoriesBasic(dir, false, full).NullToEmptyArray();
                 }
                 else
