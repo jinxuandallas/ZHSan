@@ -77,6 +77,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
         List<ButtonTexture> btSettingList = null;
 
+        List<CheckBox> btCheckBoxList = null;
+
         List<LinkButton> lbSettingList = null;
 
         List<ButtonTexture> btConfigList1 = null;
@@ -1834,6 +1836,12 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 }
             };
             btSettingList.Add(btOne);
+
+            #region 测试CheckBox
+            btCheckBoxList = new List<CheckBox>();
+            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox","试试", new Vector2(left+300, heightBase+height*1.8f));
+            btCheckBoxList.Add(btCheckBox);
+            #endregion
 
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(left + 300, heightBase))
             {
@@ -4315,6 +4323,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                 int left2 = 670+40;
 
+                
+
                 if (CurrentSetting == "基本")
                 {
                     CacheManager.DrawAvatar(@"Content\Textures\Resources\Start\1Charactermenu.png", new Rectangle(140, 26, 1000, 642), Color.White * alpha, false, true, TextureShape.None, null);
@@ -4323,6 +4333,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                     btConfigList1.ForEach(bt => bt.Draw());
 
+                    
                     var nsts = new NumericSetTextureF[] { nstViewDetail, nstGeneralBattleDead, nstGeneralYun, nstFeiZiYun, nstZhaoXian, nstSearchGen, nstZaiNan, nstDayInTurn };
 
                     foreach (var nst in nsts)
@@ -4676,6 +4687,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 CacheManager.DrawAvatar(@"Content\Textures\Resources\Start\settingmenu-alpha.png", new Rectangle(140, 26, 1000, 642), Color.White * alpha, false, true, TextureShape.None, null);
 
                 btSettingList.ForEach(bt => { bt.Scale = 0.8f; bt.Draw(null, Color.White * alpha); });
+                
 
                 int height = 84;
 
@@ -4806,6 +4818,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //btnTextureAlpha.Draw();
 
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
+
+                #region 显示CheckBox
+                btCheckBoxList.ForEach(cb => cb.Draw());
+                #endregion
             }
             else if (MenuType == MenuType.About)
             {

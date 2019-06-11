@@ -325,13 +325,15 @@ namespace GameManager
             Draw(name, pos, source, color, SpriteEffects.None, 1f);
         }
 
-        public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, float scale, float depth = 0f)
+        public static Rectangle Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, float scale, float depth = 0f)
         {
             Texture2D tex = LoadTexture(name);
+            
             if (tex != null && !tex.IsDisposed)
             {
                 Session.Current.SpriteBatch.Draw(tex, pos, source, color, 0f, Vector2.Zero, scale, effect, depth);
             }
+            return ((Rectangle)source);
         }
 
         public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, Vector2 scale, float depth = 0f)

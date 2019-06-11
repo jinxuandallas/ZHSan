@@ -1445,6 +1445,7 @@
     <Compile Include="GameObjects\zainanzhongleibiao.cs" />
     <Compile Include="GameObjects\zainanzhongleilei.cs" />
     <Compile Include="GamePanels\ButtonTexture.cs" />
+    <Compile Include="GamePanels\CheckBox.cs" />
     <Compile Include="GamePanels\LinkButton.cs" />
     <Compile Include="GamePanels\NumericSetTexture.cs" />
     <Compile Include="GamePanels\TextBox.cs" />
