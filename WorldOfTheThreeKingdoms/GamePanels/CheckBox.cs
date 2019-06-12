@@ -24,7 +24,7 @@ namespace GamePanels
         public float Alpha = 1f;
         public bool Visible = true;
         public float DrawScale = 1f;
-        public float Scale = 1f;
+        public float Scale = 0.8f;
         public SpriteFont ViewFont;
         public bool MouseOver = false;
         public bool PreMouseOver { get; set; }
@@ -32,14 +32,37 @@ namespace GamePanels
         public Color ViewTextColor1 = Color.White;
         public Color ViewTextColor2 = Color.White;
         public float ViewTextScale = 1f;
-
+        public bool Enable = true;
+        public bool Locked = false;
         public Rectangle? cbRectangle
         {
             get
             {
                 if (cbTextureRecs.Recs != null)
                 {
-                    return cbTextureRecs.Recs[0];
+                    if (Locked)
+                    {
+                        return cbTextureRecs.Recs.Length > 3 ? cbTextureRecs.Recs[3] : cbTextureRecs.Recs[0];
+                    }
+                    else if (Enable)
+                    {
+                        return (!Selected && !MouseOver ? cbTextureRecs.Recs[0] : (cbTextureRecs.Recs.Length > 1 ? cbTextureRecs.Recs[1] : cbTextureRecs.Recs[0]));
+                    }
+                    else
+                    {
+                        if (cbTextureRecs.Recs.Length > 3)
+                        {
+                            return Selected ? cbTextureRecs.Recs[3] : cbTextureRecs.Recs[2];
+                        }
+                        else if (cbTextureRecs.Recs.Length > 2)
+                        {
+                            return cbTextureRecs.Recs[2];
+                        }
+                        else
+                        {
+                            return Selected ? cbTextureRecs.Recs[1] : cbTextureRecs.Recs[0];
+                        }
+                    }
                 }
                 else return null;
             }
