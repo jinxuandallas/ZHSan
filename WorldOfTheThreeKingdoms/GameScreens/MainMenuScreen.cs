@@ -1840,6 +1840,11 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             #region 测试CheckBox
             btCheckBoxList = new List<CheckBox>();
             var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox","试试", new Vector2(left+300, heightBase+height*1.8f));
+            btCheckBox.OnButtonPress += (sender, e) =>
+            {
+                var bt = (CheckBox)sender;
+                bt.Selected = !bt.Selected;
+            };
             btCheckBoxList.Add(btCheckBox);
             #endregion
 
@@ -4005,6 +4010,13 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                     bt.Update();
                 });
 
+                #region 测试更新CheckBox
+                btCheckBoxList.ForEach(cb =>
+                {
+                    cb.Visible = true;
+                    cb.Update();
+                });
+                #endregion
                 //btSettingList.Where(bt => buttons.Contains(bt.ID)).NullToEmptyList().ForEach(bt =>
                 //{
                 //    bt.Visible = true;
