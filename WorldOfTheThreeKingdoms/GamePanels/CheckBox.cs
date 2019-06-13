@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameManager;
 using Platforms;
+using FontStashSharp;
 
 namespace GamePanels
 {
@@ -194,12 +195,14 @@ namespace GamePanels
             if (Visible)
             {
 
-                Rectangle bounds = CacheManager.Draw(Path, (basePos == null ? Position : (Vector2)(Position + basePos)) * DrawScale, texIndex == null ? cbRectangle : cbTextureRecs.Recs[(int)texIndex], color * Alpha, SpriteEffects.None, Scale);
+                Bounds bounds = CacheManager.Draw(Path, (basePos == null ? Position : (Vector2)(Position + basePos)) * DrawScale, texIndex == null ? cbRectangle : cbTextureRecs.Recs[(int)texIndex], color * Alpha, SpriteEffects.None, Scale);
 
-                CacheManager.DrawString(ViewFont ?? Session.Current.Font, Text, ((basePos == null ? Position + new Vector2((float)(space ?? 0) + bounds.Width, 5) : (Vector2)(Position + basePos + new Vector2((float)(space ?? 0) + bounds.Width, 5)))) * DrawScale, (MouseOver || Selected) ? ViewTextColor2 * Alpha : ViewTextColor1 * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, 0f);
+                Width =(int)(bounds.Width);
+                Height = (int)(bounds.Height);
 
-                Width = bounds.Width;
-                Height = bounds.Height;
+                CacheManager.DrawString(ViewFont ?? Session.Current.Font, Text, ((basePos == null ? Position + new Vector2((float)(space ?? 0) + Width, 2) : (Vector2)(Position + basePos + new Vector2((float)(space ?? 0) + Width, 2)))) * DrawScale, (MouseOver || Selected) ? ViewTextColor2 * Alpha : ViewTextColor1 * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, 0f);
+
+
             }
 
         }

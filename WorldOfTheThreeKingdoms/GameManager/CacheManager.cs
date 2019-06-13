@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Tools;
-
+using FontStashSharp;
 namespace GameManager
 {
     public class PlatformTexture
@@ -325,7 +325,7 @@ namespace GameManager
             Draw(name, pos, source, color, SpriteEffects.None, 1f);
         }
 
-        public static Rectangle Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, float scale, float depth = 0f)
+        public static Bounds Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, float scale, float depth = 0f)
         {
             Texture2D tex = LoadTexture(name);
             
@@ -333,7 +333,9 @@ namespace GameManager
             {
                 Session.Current.SpriteBatch.Draw(tex, pos, source, color, 0f, Vector2.Zero, scale, effect, depth);
             }
-            return ((Rectangle)source);
+
+
+            return new Bounds() { X = pos.X, Y = pos.Y,X2=pos.X+source.Value.Width*scale,Y2=pos.Y+source.Value.Height*scale };
         }
 
         public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, Vector2 scale, float depth = 0f)
@@ -347,6 +349,7 @@ namespace GameManager
             {
 
             }
+            
         }
 
         public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, float rotation, SpriteEffects effect, Vector2 scale)
