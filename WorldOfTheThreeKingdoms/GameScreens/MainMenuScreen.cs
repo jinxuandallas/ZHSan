@@ -1839,7 +1839,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             #region 测试CheckBox
             btCheckBoxList = new List<CheckBox>();
-            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox","试试", new Vector2(left+300, heightBase+height*1.8f));
+            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox","试试\n试试就试试", new Vector2(left+300, heightBase+height*1.8f));
             btCheckBox.OnButtonPress += (sender, e) =>
             {
                 var bt = (CheckBox)sender;
@@ -4832,7 +4832,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
 
                 #region 显示CheckBox
-                btCheckBoxList.ForEach(cb => cb.Draw());
+                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 5),ViewTextColorMouseOver=Color.Red };
+                btCheckBoxList.ForEach(cb => cb.Draw(cbs));
                 #endregion
             }
             else if (MenuType == MenuType.About)

@@ -229,7 +229,7 @@ namespace FontStashSharp
 			return x;
 		}
 
-		public float TextBounds(float x, float y, StringSegment str, ref Bounds bounds)
+        public float TextBounds(float x, float y, StringSegment str, ref Bounds bounds)
 		{
 			var q = new FontGlyphSquad();
 			FontGlyph glyph = null;

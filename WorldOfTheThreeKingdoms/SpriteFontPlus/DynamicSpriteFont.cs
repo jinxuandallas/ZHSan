@@ -92,7 +92,20 @@ namespace SpriteFontPlus
 			return result;
 		}
 
-		public int AddTtf(string name, byte[] ttf)
+        public Bounds DrawStringReturnBounds(SpriteBatch batch, string text, Vector2 pos, Color color, Vector2 scale, float depth)
+        {
+            _fontSystem.Color = color;
+            _fontSystem.Scale = scale;
+
+            var result = _fontSystem.DrawText(batch, pos.X, pos.Y, text, depth);
+            Bounds bounds = new Bounds();
+            _fontSystem.TextBounds(pos.X,pos.Y, text, ref bounds);
+
+            _fontSystem.Scale = Vector2.One;
+
+            return bounds;
+        }
+        public int AddTtf(string name, byte[] ttf)
 		{
 			return _fontSystem.AddFontMem(name, ttf);
 		}

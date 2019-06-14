@@ -601,5 +601,32 @@ namespace GameManager
             }
         }
 
+        /// <summary>
+        /// 画文字并返回文字范围的矩形列表（支持多行文字）
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="pos"></param>
+        /// <param name="color"></param>
+        /// <param name="rotation"></param>
+        /// <param name="origin"></param>
+        /// <param name="scale"></param>
+        /// <param name="effects"></param>
+        /// <param name="layerDepth"></param>
+        /// <param name="checkTradition"></param>
+        /// <param name="upload"></param>
+        /// <returns>返回文字范围的矩形列表</returns>
+        public static List<Bounds> DrawStringReturnBounds(SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
+        {
+            List<Bounds> bounds=null;
+            if (!String.IsNullOrEmpty(text))
+            {
+                text = CheckTextCache(font, text, checkTradition, upload);
+                //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
+
+                bounds=TextManager.DrawTextsReturnBounds(text, FontPair, pos, color, 0, scale, layerDepth);
+            }
+            return bounds;
+        }
     }
 }
