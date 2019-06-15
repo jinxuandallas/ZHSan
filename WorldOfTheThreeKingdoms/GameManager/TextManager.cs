@@ -61,6 +61,7 @@ namespace GameManager
         public static List<Bounds> DrawTextsReturnBounds(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
         {
             List<Bounds> bounds = new List<Bounds>();
+            Bounds bound;
             if (font == null)
             {
                 Init(pair.Name, pair.Size);
@@ -73,7 +74,15 @@ namespace GameManager
             for (int i = 0; i < texs.Length; i++)
             {
                 var te = texs[i];
-                bounds.Add(font.DrawStringReturnBounds(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth));
+
+                bound=font.DrawStringReturnBounds(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth);
+                if(scale!=1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
+                {
+                    bound.X2 = bound.X + bound.Width * scale;
+                    bound.Y2 = bound.Y + bound.Height * scale;
+                }
+                bounds.Add(bound);
+                    
             }
 
             return bounds;

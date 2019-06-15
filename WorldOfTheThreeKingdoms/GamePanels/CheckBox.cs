@@ -24,6 +24,9 @@ namespace GamePanels
         /// 整个控件的缩放倍数
         /// </summary>
         public float? Scale;
+        /// <summary>
+        /// 字体与复选框之间的距离偏移量
+        /// </summary>
         public Vector2? Offset;
         public float? ViewTextScale;
     }
