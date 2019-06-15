@@ -334,7 +334,8 @@ namespace GameManager
                 Session.Current.SpriteBatch.Draw(tex, pos, source, color, 0f, Vector2.Zero, scale, effect, depth);
             }
 
-
+            if (source == null)
+                return new Bounds();
             return new Bounds() { X = pos.X, Y = pos.Y,X2=pos.X+source.Value.Width*scale,Y2=pos.Y+source.Value.Height*scale };
         }
 
