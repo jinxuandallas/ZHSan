@@ -29,6 +29,10 @@ namespace GamePanels
         /// </summary>
         public Vector2? Offset;
         public float? ViewTextScale;
+        /// <summary>
+        /// 控件的偏移量
+        /// </summary>
+        public Vector2? basPos;
     }
     public class CheckBoxPressEventArgs : EventArgs
     {
@@ -235,7 +239,7 @@ namespace GamePanels
                             && bound.Y + ((Vector2)basePos).Y - ExtDis <= poY && poY <= bound.Y2 + ((Vector2)basePos).Y + ExtDis;
                     }
                     if (MouseOver)
-                        return MouseOver;
+                        return MouseOver;//一旦判断鼠标在一个范围内则停止其他范围矩形的判断检索
                 }
             }
             else
@@ -295,7 +299,7 @@ namespace GamePanels
             ViewTextColor = cbSetting.ViewTextColor ?? ViewTextColor;
             ViewTextColorMouseOver = cbSetting.ViewTextColorMouseOver ?? ViewTextColorMouseOver;
             Scale = cbSetting.Scale ?? Scale;
-            Draw(null, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
+            Draw(cbSetting.basPos, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
         }
 
         /// <summary>
@@ -316,10 +320,7 @@ namespace GamePanels
                 Bounds bound = CacheManager.Draw(Path, (basePos == null ? Position : (Vector2)(Position + basePos)) * DrawScale, texIndex == null ? cbRectangle : cbTextureRecs.Recs[(int)texIndex], color * Alpha, SpriteEffects.None, Scale);
 
                 //偏移量要加上画复选框后的宽度
-                if (offset != null)
-                    offset += new Vector2(bound.Width,0);
-                else
-                    offset = new Vector2(bound.Width, 2);//默认的偏移量
+                offset = offset == null ? new Vector2(bound.Width, 2) : offset + new Vector2(bound.Width, 0);//如果偏移量为空则加上默认的偏移量
 
                 bounds = CacheManager.DrawStringReturnBounds(viewFont ?? Session.Current.Font, Text, (basePos == null ? (Vector2)(Position + offset) : (Vector2)(Position + basePos + offset)) * DrawScale, (MouseOver || Selected) ? ViewTextColorMouseOver * Alpha : ViewTextColor * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, 0f);
 
