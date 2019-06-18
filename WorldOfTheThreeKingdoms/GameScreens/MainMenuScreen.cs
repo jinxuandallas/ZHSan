@@ -173,7 +173,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         string[] texts = new string[]
         {
         };
-        
+
         string[] aboutLines = null;
 
         int currentStartVersion = 2;
@@ -257,7 +257,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                         if (lines.Length > 2)
                         {
                             string s = lines[2];
-                            string[] s2 = s.Split(new char[]{' '});
+                            string[] s2 = s.Split(new char[] { ' ' });
                             mod.xOffset = int.Parse(s2[0]);
                             mod.yOffset = int.Parse(s2[1]);
                         }
@@ -294,10 +294,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 scenario = null;
                 faction = null;
                 InitScenarioList();
-            if (btScenarioSelectList.Count > 0)
-            {
-                btScenarioSelectList[0].PressButton();
-            }
+                if (btScenarioSelectList.Count > 0)
+                {
+                    btScenarioSelectList[0].PressButton();
+                }
                 ScreenLayers.DantiaoLayer.Persons = null;
             };
             btList.Add(btOne);
@@ -530,7 +530,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btSettingList.Add(btOne);
 
-            btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(375+120, 188))
+            btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(375 + 120, 188))
             {
                 ID = "传统中文"
             };
@@ -555,7 +555,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btSettingList.Add(btOne);
 
-            btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(375+120, 188 + 43))
+            btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(375 + 120, 188 + 43))
             {
                 ID = "全屏模式"
             };
@@ -953,7 +953,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             left2 = 670;
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(640, heightBase + height * 0f))
             {
-                ID = "XuNiShangXian",Scale=0.8f
+                ID = "XuNiShangXian",
+                Scale = 0.8f
             };
             btOne.OnButtonPress += (sender, e) =>
             {
@@ -973,7 +974,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(640, heightBase + 62 * 0.5f))
             {
-                ID = "WuJiangGuanXi",Scale=0.8f
+                ID = "WuJiangGuanXi",
+                Scale = 0.8f
             };
             btOne.OnButtonPress += (sender, e) =>
             {
@@ -1117,7 +1119,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstXunLian = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+1 + height * 0.5f), true)
+            nstXunLian = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 1 + height * 0.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1125,7 +1127,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstBuChong = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+1 + height * 1.0f), true)
+            nstBuChong = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 1 + height * 1.0f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1133,7 +1135,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstZiJing = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+1 + height * 1.5f), true)
+            nstZiJing = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 1 + height * 1.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1141,7 +1143,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstLiangCao = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+2 + height * 2.0f), true)
+            nstLiangCao = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 2 + height * 2.0f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1149,7 +1151,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstBuDui = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+2 + height * 2.5f), true)
+            nstBuDui = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 2 + height * 2.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1157,7 +1159,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstJianZhu = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+2 + height * 3f), true)
+            nstJianZhu = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 2 + height * 3f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1165,7 +1167,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstRenKou = new NumericSetTextureF(0.000001f, 0.001f, 0.001f, null, new Vector2(left1 + 200, heightBase+2 + height * 3.5f), true)
+            nstRenKou = new NumericSetTextureF(0.000001f, 0.001f, 0.001f, null, new Vector2(left1 + 200, heightBase + 2 + height * 3.5f), true)
             {
                 FloatNum = 5,
                 DisNumber = false,
@@ -1173,7 +1175,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.00001f
             };
 
-            nstWeiCheng = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+3 + height * 4f), true)
+            nstWeiCheng = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 3 + height * 4f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1181,7 +1183,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstHuoYan = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase+3 + height * 4.5f), true)
+            nstHuoYan = new NumericSetTextureF(0, 10, 10, null, new Vector2(left1 + 200, heightBase + 3 + height * 4.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1199,7 +1201,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstMaiLiangShangYe = new NumericSetTextureF(1, 2000, 2000, null, new Vector2(left2 + 200, heightBase+1 + height * 0.5f), true)
+            nstMaiLiangShangYe = new NumericSetTextureF(1, 2000, 2000, null, new Vector2(left2 + 200, heightBase + 1 + height * 0.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1207,7 +1209,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstZiJingHuanLiang = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left2 + 200, heightBase+1 + height * 1.0f), true)
+            nstZiJingHuanLiang = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left2 + 200, heightBase + 1 + height * 1.0f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1215,7 +1217,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 1
             };
 
-            nstLiangCaoHuanZiJing = new NumericSetTextureF(1, 5000, 5000, null, new Vector2(left2 + 200, heightBase+1 + height * 1.5f), true)
+            nstLiangCaoHuanZiJing = new NumericSetTextureF(1, 5000, 5000, null, new Vector2(left2 + 200, heightBase + 1 + height * 1.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1223,7 +1225,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstJiqiaoDian = new NumericSetTextureF(0, 3, 3, null, new Vector2(left2 + 200, heightBase+2 + height * 2f), true)
+            nstJiqiaoDian = new NumericSetTextureF(0, 3, 3, null, new Vector2(left2 + 200, heightBase + 2 + height * 2f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1231,7 +1233,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstNeiZhengZiJing = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase+2 + height * 2.5f), true)
+            nstNeiZhengZiJing = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase + 2 + height * 2.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1239,7 +1241,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 1
             };
 
-            nstBuChongZiJing = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase+2 + height * 3f), true)
+            nstBuChongZiJing = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase + 2 + height * 3f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1247,7 +1249,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 1
             };
 
-            nstBuChongTongZhi = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase+2 + height * 3.5f), true)
+            nstBuChongTongZhi = new NumericSetTextureF(1, 100, 100, null, new Vector2(left2 + 200, heightBase + 2 + height * 3.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1255,7 +1257,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 1
             };
 
-            nstBuChongMinXin = new NumericSetTextureF(1, 300, 300, null, new Vector2(left2 + 200, heightBase+3 + height * 4f), true)
+            nstBuChongMinXin = new NumericSetTextureF(1, 300, 300, null, new Vector2(left2 + 200, heightBase + 3 + height * 4f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1263,7 +1265,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 1
             };
 
-            nstQianDuZiJing = new NumericSetTextureF(1, 30000, 30000, null, new Vector2(left2 + 200, heightBase+3 + height * 4.5f), true)
+            nstQianDuZiJing = new NumericSetTextureF(1, 30000, 30000, null, new Vector2(left2 + 200, heightBase + 3 + height * 4.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1281,7 +1283,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstBaoJiangZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase+1 + height * 0.5f), true)
+            nstBaoJiangZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase + 1 + height * 0.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1289,7 +1291,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstJieLaoZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase+1 + height * 1f), true)
+            nstJieLaoZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase + 1 + height * 1f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1297,7 +1299,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstPoHuaiZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase+1 + height * 1.5f), true)
+            nstPoHuaiZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase + 1 + height * 1.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1305,7 +1307,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstShanDongZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase+2 + height * 2f), true)
+            nstShanDongZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase + 2 + height * 2f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1313,7 +1315,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstLiuYanZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase+2 + height * 2.5f), true)
+            nstLiuYanZiJing = new NumericSetTextureF(1, 1000, 1000, null, new Vector2(left3 + 200, heightBase + 2 + height * 2.5f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1321,7 +1323,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 10
             };
 
-            nstBingYiShangXian = new NumericSetTextureF(0, 1, 1, null, new Vector2(left3 + 200, heightBase+2 + height * 3f), true)
+            nstBingYiShangXian = new NumericSetTextureF(0, 1, 1, null, new Vector2(left3 + 200, heightBase + 2 + height * 3f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1329,7 +1331,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstBingYiZengLiang = new NumericSetTextureF(0, 10, 10, null, new Vector2(left3 + 200, heightBase+2 + height * 3.5f), true)
+            nstBingYiZengLiang = new NumericSetTextureF(0, 10, 10, null, new Vector2(left3 + 200, heightBase + 2 + height * 3.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1337,7 +1339,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 0.1f
             };
 
-            nstBuDuiJingYan = new NumericSetTextureF(1000, 300000, 300000, null, new Vector2(left3 + 200, heightBase+3 + height * 4f), true)
+            nstBuDuiJingYan = new NumericSetTextureF(1000, 300000, 300000, null, new Vector2(left3 + 200, heightBase + 3 + height * 4f), true)
             {
                 IntMode = true,
                 DisNumber = false,
@@ -1345,7 +1347,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 Unit = 100
             };
 
-            nstTongShuaiGongJi = new NumericSetTextureF(0, 1, 1, null, new Vector2(left3 + 200, heightBase+3 + height * 4.5f), true)
+            nstTongShuaiGongJi = new NumericSetTextureF(0, 1, 1, null, new Vector2(left3 + 200, heightBase + 3 + height * 4.5f), true)
             {
                 FloatNum = 1,
                 DisNumber = false,
@@ -1361,9 +1363,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             {
                 var hard = hards1[i];
 
-                btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(560+ 90 * i, 110))
+                btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(560 + 90 * i, 110))
                 {
-                    ID = hard,Scale=0.8f
+                    ID = hard,
+                    Scale = 0.8f
                 };
                 btOne.OnButtonPress += (sender, e) =>
                 {
@@ -1839,7 +1842,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             #region 测试CheckBox
             btCheckBoxList = new List<CheckBox>();
-            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox","试试\n试试就试试", new Vector2(left+300, heightBase+height*1.8f));
+            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
             btCheckBox.OnButtonPress += (sender, e) =>
             {
                 var bt = (CheckBox)sender;
@@ -2059,7 +2062,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 {
                     var mod = MODs[i];
 
-                    btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(400 + 280 * i, 120 ))
+                    btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(400 + 280 * i, 120))
                     {
                         ID = "MOD" + mod.ID
                     };
@@ -2109,7 +2112,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 NowNumber = 1,
                 Unit = 1
             };
-            
+
             nstBattleSpeed = new NumericSetTextureF(0, 10, 10, null, new Vector2(420, 476), true)
             {
                 IntMode = true,
@@ -2168,7 +2171,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             btnSmallResolution = new ButtonTexture(@"Content\Textures\Resources\Start\NumberSetS", "Minus", null)
             {
-                Position = new Vector2(407, 280),Scale=0.8f
+                Position = new Vector2(407, 280),
+                Scale = 0.8f
             };
             btnSmallResolution.OnButtonPress += (sender, e) =>
             {
@@ -2469,7 +2473,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                                         InputManager.PoX = 0;
                                         InputManager.PoY = 0;
                                     }
-                                        
+
                                     btDantiaoPlayersList = new List<ButtonTexture>();
 
                                     for (int j = 0; j < faction.Persons.Count; j++)
@@ -4168,10 +4172,25 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                 CacheManager.Draw(@"Content\Textures\Resources\Start\Words.png", new Vector2(380, 260), Color.White);
             }
-            
+
             if (MenuType == MenuType.None)
             {
                 btList.ForEach(bt => bt.Draw());
+
+                #region 测试SetData
+                ///还有一个问题，滚动条内是否可以有按钮等控件
+                Texture2D t = new Texture2D(Platform.GraphicsDevice, 100, 200);
+                Color[] c = new Color[100 * 200];
+                for (int i = 0; i < 100; i++)
+                    for (int j = 30; j < 50; j++)
+                    {
+                        int p = i * 100 + j;
+                        //if (j < 100)
+                            c[p] = Color.Yellow;
+                    }
+                t.SetData(c);
+                Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
+                #endregion 
 
                 for (int i = 0; i < texts.Length && i <= textLevel; i++)
                 {
@@ -4299,7 +4318,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                                     if (index >= 0)
                                     {
                                         var person = faction.Persons[index] as Person;
-                                        
+
                                         bt.Scale = 0.5f;
                                         bt.Draw(null, Color.White * alpha);
 
@@ -4387,9 +4406,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                 int left1 = 220;
 
-                int left2 = 670+40;
+                int left2 = 670 + 40;
 
-                
+
 
                 if (CurrentSetting == "基本")
                 {
@@ -4399,7 +4418,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                     btConfigList1.ForEach(bt => bt.Draw());
 
-                    
+
                     var nsts = new NumericSetTextureF[] { nstViewDetail, nstGeneralBattleDead, nstGeneralYun, nstFeiZiYun, nstZhaoXian, nstSearchGen, nstZaiNan, nstDayInTurn };
 
                     foreach (var nst in nsts)
@@ -4632,7 +4651,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                     btConfigList4.ForEach(bt =>
                     { bt.Scale = 0.8f; bt.Draw(); });
 
-                    CacheManager.DrawString(Session.Current.Font, "难度", new Vector2(505, 110), Color.White * alpha,0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "难度", new Vector2(505, 110), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
                     int inHard = 0;
                     cbAIHardList.ForEach(cb =>
                     {
@@ -4651,20 +4670,20 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                     CacheManager.DrawString(Session.Current.Font, "电脑说服俘虏限忠诚不满100", new Vector2(left1, heightBase + height * 1.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑视玩家为最大敌人", new Vector2(left1, heightBase+1 + height * 2f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
-                    CacheManager.DrawString(Session.Current.Font, "收入缩减率对玩家有效", new Vector2(left1, heightBase+1 + height * 2.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑视玩家为最大敌人", new Vector2(left1, heightBase + 1 + height * 2f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "收入缩减率对玩家有效", new Vector2(left1, heightBase + 1 + height * 2.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "收入缩减率对电脑有效", new Vector2(left1, heightBase+1 + height * 3f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "收入缩减率对电脑有效", new Vector2(left1, heightBase + 1 + height * 3f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "忽略电脑君主的战略倾向", new Vector2(left1, heightBase+2 + height * 3.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "忽略电脑君主的战略倾向", new Vector2(left1, heightBase + 2 + height * 3.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑优先处斩能力高者", new Vector2(left1, heightBase+2 + height * 4f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑优先处斩能力高者", new Vector2(left1, heightBase + 2 + height * 4f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑处斩机率", new Vector2(left1 - 30, heightBase+2 + height * 4.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑处斩机率", new Vector2(left1 - 30, heightBase + 2 + height * 4.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑声讨玩家", new Vector2(left1 - 30, heightBase+3 + height * 5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑声讨玩家", new Vector2(left1 - 30, heightBase + 3 + height * 5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑因玩家合并", new Vector2(left1 - 30, heightBase+3 + height * 5.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑因玩家合并", new Vector2(left1 - 30, heightBase + 3 + height * 5.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
                     left2 = 525;
 
@@ -4676,21 +4695,21 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                     CacheManager.DrawString(Session.Current.Font, "电脑部队防御力乘数", new Vector2(left2, heightBase + height * 1.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑建筑伤害率乘数", new Vector2(left2, heightBase+1 + height * 2f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑建筑伤害率乘数", new Vector2(left2, heightBase + 1 + height * 2f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑训练速度", new Vector2(left2, heightBase+1 + height * 2.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑训练速度", new Vector2(left2, heightBase + 1 + height * 2.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑征兵速度", new Vector2(left2, heightBase+1 + height * 3f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑征兵速度", new Vector2(left2, heightBase + 1 + height * 3f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑武将经验获得率", new Vector2(left2, heightBase+2 + height * 3.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑武将经验获得率", new Vector2(left2, heightBase + 2 + height * 3.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑部队经验获得率", new Vector2(left2, heightBase+2 + height * 4f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑部队经验获得率", new Vector2(left2, heightBase + 2 + height * 4f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑部队抗计率", new Vector2(left2, heightBase+2 + height * 4.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑部队抗计率", new Vector2(left2, heightBase + 2 + height * 4.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑部队抗围率", new Vector2(left2, heightBase+3 + height * 5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑部队抗围率", new Vector2(left2, heightBase + 3 + height * 5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
-                    CacheManager.DrawString(Session.Current.Font, "电脑额外人才", new Vector2(left2, heightBase+3 + height * 5.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "电脑额外人才", new Vector2(left2, heightBase + 3 + height * 5.5f), Color.White * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
 
                 }
 
@@ -4719,7 +4738,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                         else
                         {
                             bt.Enable = true;
-                            CacheManager.DrawString(Session.Current.Font, sce.Title.WordsSubString(25), bt.Position + new Vector2(45+30 , 2), color * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+                            CacheManager.DrawString(Session.Current.Font, sce.Title.WordsSubString(25), bt.Position + new Vector2(45 + 30, 2), color * alpha, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
                             CacheManager.DrawString(Session.Current.Font, sce.Time.ToSeasonDate(), bt.Position + new Vector2(45 + 280, 2), color * alpha, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, 1f);
                             CacheManager.DrawString(Session.Current.Font, sce.Info, bt.Position + new Vector2(45 + 420, 2), color * alpha, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, 1f);
 
@@ -4753,7 +4772,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 CacheManager.DrawAvatar(@"Content\Textures\Resources\Start\settingmenu-alpha.png", new Rectangle(140, 26, 1000, 642), Color.White * alpha, false, true, TextureShape.None, null);
 
                 btSettingList.ForEach(bt => { bt.Scale = 0.8f; bt.Draw(null, Color.White * alpha); });
-                
+
 
                 int height = 84;
 
@@ -4781,7 +4800,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                 CacheManager.DrawString(Session.Current.Font, "繁体中文", new Vector2(528, 188), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
 
-                CacheManager.DrawString(Session.Current.Font, "界面:", new Vector2(250, 188 + 44+3), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
+                CacheManager.DrawString(Session.Current.Font, "界面:", new Vector2(250, 188 + 44 + 3), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
 
                 CacheManager.DrawString(Session.Current.Font, "窗口模式", new Vector2(408, 188 + 44), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
 
@@ -4793,12 +4812,12 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
                 if (!Platform.IsMobilePlatForm)
                 {
-                    CacheManager.DrawString(Session.Current.Font, "分辨率：", new Vector2(250, 188 + 44*2+5), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
+                    CacheManager.DrawString(Session.Current.Font, "分辨率：", new Vector2(250, 188 + 44 * 2 + 5), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
 
                     btnSmallResolution.Alpha = alpha;
                     btnSmallResolution.Draw();
 
-                    CacheManager.DrawString(Session.Current.Font, Setting.Current.Resolution, new Vector2(438, 188 + 44*2+3), Color.White * alpha);
+                    CacheManager.DrawString(Session.Current.Font, Setting.Current.Resolution, new Vector2(438, 188 + 44 * 2 + 3), Color.White * alpha);
 
                     btnLargeResolution.Alpha = alpha;
                     btnLargeResolution.Draw();
@@ -4812,9 +4831,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //tbGamerName.Draw();
 
 
-                CacheManager.DrawString(Session.Current.Font, "音乐：", new Vector2(250, 188 + 44 * 3+10), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
+                CacheManager.DrawString(Session.Current.Font, "音乐：", new Vector2(250, 188 + 44 * 3 + 10), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
 
-                CacheManager.DrawString(Session.Current.Font, "声音：", new Vector2(250, 188 + 44 * 4+11), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
+                CacheManager.DrawString(Session.Current.Font, "声音：", new Vector2(250, 188 + 44 * 4 + 11), Color.White * alpha, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 1f);
                 nstMusic.Widthchange = -50;
                 nstMusic.Heightchange = -5;
                 nstMusic.leftTexture.Scale = 0.8f;
@@ -4886,9 +4905,11 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
 
                 #region 显示CheckBox
-                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2),Scale=0.8f };
+                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.8f };
                 btCheckBoxList.ForEach(cb => cb.Draw(cbs));
                 #endregion
+
+
             }
             else if (MenuType == MenuType.About)
             {
