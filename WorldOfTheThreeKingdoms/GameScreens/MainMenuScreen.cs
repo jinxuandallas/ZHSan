@@ -4178,18 +4178,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 btList.ForEach(bt => bt.Draw());
 
                 #region 测试SetData
-                ///还有一个问题，滚动条内是否可以有按钮等控件
-                Texture2D t = new Texture2D(Platform.GraphicsDevice, 100, 200);
-                Color[] c = new Color[100 * 200];
-                for (int i = 0; i < 100; i++)
-                    for (int j = 30; j < 50; j++)
-                    {
-                        int p = i * 100 + j;
-                        //if (j < 100)
-                            c[p] = Color.Yellow;
-                    }
-                t.SetData(c);
-                Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
+                TestTexture2D();
                 #endregion 
 
                 for (int i = 0; i < texts.Length && i <= textLevel; i++)
@@ -4961,5 +4950,39 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
         }
 
+        private void TestTexture2D()
+        {
+            ///还有一个问题，滚动条内是否可以有按钮等控件
+            Texture2D t = new Texture2D(Platform.GraphicsDevice, 400, 200);
+            Texture2D tt = Platform.Current.LoadTexture(@"Content\Textures\Resources\Start\ExitGame.png");
+            Color[] c = new Color[400 * 200];
+            for (int i = 0; i < 100; i++)
+                for (int j = 30; j < 50; j++)
+                {
+                    int p = i * 400 + j;
+                    //if (j < 100)
+                    c[p] = Color.Yellow;
+                }
+            t.SetData(c);
+
+            Color[] c2 = new Color[tt.Width * tt.Height];
+            tt.GetData(c2);
+
+            Texture2D t3 = new Texture2D(Platform.GraphicsDevice, tt.Width, tt.Height);
+            t3.SetData(c2,0,c2.Length);
+            for (int i = 100; i < tt.Width+100; i++)
+                for (int j = 50; j < tt.Height+50; j++)
+                {
+                    int p = j * t.Width + i;
+                    int p2 = (j - 50) * tt.Width + i - 100;
+                    c[p] = c2[p2];
+                }
+
+            //for (int i = 0; i < c2.Length; i++)
+            //    c[i] = c2[i];
+            t.SetData(c);
+            Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
+            Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
+        }
     }
 }
