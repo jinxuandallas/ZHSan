@@ -5,29 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FontStashSharp;
 
 namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
 {
-    public interface IContorlinFrame
+    public interface IContent
     {
-        Vector2 Position { get; set; }
+        /// <summary>
+        /// 在框架内的偏移量
+        /// </summary>
+        Vector2 OffsetPos { get; set; }
         float Scale { get; set; }
         float Depth { get; set; }
+        Bounds[] bounds { get; set; }
+        float Width { get; set; }
+        float Height { get; set; }
+        Frame baseFrame { get; set; } 
     }
 
-    class Frame
+    public class Frame
     {
         public Vector2 Position;
-        public int Width, Height;
+        public float Width, Height;
         public Texture2D BackgroundPic;
-        public List<IContorlinFrame> Contorl;
-        protected Texture2D WholeCanvas;
+        public List<IContent> Contorl;
+        protected Texture2D Canvas;
         public Rectangle? View;
+        public Color BackgroundColor=Color.LightSkyBlue;
 
         public Frame(Vector2 pos,string bgPicPath)
         {
-            Contorl = new List<IContorlinFrame>();
-            WholeCanvas = null;
+            Contorl = new List<IContent>();
+            Canvas = null;
         }
     }
 
