@@ -17,5 +17,9 @@ namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
         public float Width { get; set; }
         public float Height { get; set; }
         public Frame baseFrame { get; set; }
+        public Texture2D Texture { get; set; }
+        public void DrawtoTexture()
+        {
+        }
     }
 }

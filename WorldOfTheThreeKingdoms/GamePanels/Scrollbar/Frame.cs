@@ -20,7 +20,9 @@ namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
         Bounds[] bounds { get; set; }
         float Width { get; set; }
         float Height { get; set; }
-        Frame baseFrame { get; set; } 
+        Frame baseFrame { get; set; }
+        Texture2D Texture { get; set; }
+        void DrawtoTexture();
     }
 
     public class Frame
