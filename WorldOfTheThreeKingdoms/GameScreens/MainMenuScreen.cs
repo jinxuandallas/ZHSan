@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Tools;
+using GamePanels.Scrollbar;
 
 namespace WorldOfTheThreeKingdoms.GameScreens
 {
@@ -4981,8 +4982,14 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             //for (int i = 0; i < c2.Length; i++)
             //    c[i] = c2[i];
             t.SetData(c);
-            Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
-            Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
+            //Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
+            //Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
+
+            TextContent tc = new TextContent();
+            tc.DrawTexture();
+
+
+
         }
     }
 }

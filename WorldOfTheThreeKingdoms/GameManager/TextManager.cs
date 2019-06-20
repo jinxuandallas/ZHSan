@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FontStashSharp;
+using Microsoft.Xna.Framework.Graphics;
 namespace GameManager
 {
     public struct FontPair
@@ -58,6 +59,27 @@ namespace GameManager
             //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
         }
 
+        public static List<Texture2D> DrawTextsToTexture(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
+        {
+            List<Texture2D> textures = new List<Texture2D>();
+            if (font == null)
+            {
+                Init(pair.Name, pair.Size);
+            }
+
+            text = text.Replace("\r\n", "\n").Replace("\r", "\n");
+
+            var texs = text.Split('\n');
+
+            for (int i = 0; i < texs.Length; i++)
+            {
+                var te = texs[i];
+                textures.Add(font.DrawStringToTexture(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth));
+            }
+
+            return textures;
+            //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
+        }
         public static List<Bounds> DrawTextsReturnBounds(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
         {
             List<Bounds> bounds = new List<Bounds>();

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
 using StbSharp;
-
+using Platforms;
 namespace FontStashSharp
 {
 	internal unsafe class FontSystem
@@ -66,7 +66,8 @@ namespace FontStashSharp
 			ClearState();
 		}
 
-		public Texture2D Texture { get; private set; }
+		public Texture2D Texture { get; set; }
+        public Texture2D Texture2 { get; set; }
 
 		public void AddWhiteRect(int w, int h)
 		{
@@ -228,6 +229,79 @@ namespace FontStashSharp
 			Flush(batch, depth);
 			return x;
 		}
+
+        public Texture2D DrawTextToTexture(SpriteBatch batch, float x, float y, StringSegment str, float depth)
+        {
+            if (str.IsNullOrEmpty) return null;
+
+            FontGlyph glyph = null;
+            var q = new FontGlyphSquad();
+            var prevGlyphIndex = -1;
+            var isize = (int)(Size * 10.0f);
+            var iblur = (int)BlurValue;
+            float scale = 0;
+            Font font;
+            float width = 0;
+            if (FontId < 0 || FontId >= _fontsNumber)
+                return null;
+            font = _fonts[FontId];
+            if (font.Data == null)
+                return null;
+            scale = font._font.fons__tt_getPixelHeightScale(isize / 10.0f);
+
+            if ((Alignment & FONS_ALIGN_LEFT) != 0)
+            {
+            }
+            else if ((Alignment & FONS_ALIGN_RIGHT) != 0)
+            {
+                var bounds = new Bounds();
+                width = TextBounds(x, y, str, ref bounds);
+                x -= width;
+            }
+            else if ((Alignment & FONS_ALIGN_CENTER) != 0)
+            {
+                var bounds = new Bounds();
+                width = TextBounds(x, y, str, ref bounds);
+                x -= width * 0.5f;
+            }
+
+            float originX = 0.0f;
+            float originY = 0.0f;
+
+            originY += GetVertAlign(font, Alignment, isize);
+            for (int i = 0; i < str.Length; i += Char.IsSurrogatePair(str.String, i + str.Location) ? 2 : 1)
+            {
+                var codepoint = Char.ConvertToUtf32(str.String, i + str.Location);
+                glyph = GetGlyph(font, codepoint, isize, iblur, FONS_GLYPH_BITMAP_REQUIRED);
+                if (glyph != null)
+                {
+                    GetQuad(font, prevGlyphIndex, glyph, scale, Spacing, ref originX, ref originY, &q);
+                    if (_vertsNumber + 6 > 1024)
+                    {
+                        FlushToTexture(batch, depth);
+                    }
+
+                    q.X0 = (int)(q.X0 * Scale.X);
+                    q.X1 = (int)(q.X1 * Scale.X);
+                    q.Y0 = (int)(q.Y0 * Scale.Y);
+                    q.Y1 = (int)(q.Y1 * Scale.Y);
+
+                    AddVertex(new Rectangle((int)(x + q.X0),
+                                (int)(y + q.Y0),
+                                (int)(q.X1 - q.X0),
+                                (int)(q.Y1 - q.Y0)),
+                            new Rectangle((int)(q.S0 * _params_.Width),
+                                (int)(q.T0 * _params_.Height),
+                                (int)((q.S1 - q.S0) * _params_.Width),
+                                (int)((q.T1 - q.T0) * _params_.Height)),
+                            Color);
+                }
+
+                prevGlyphIndex = glyph != null ? glyph.Index : -1;
+            }
+
+            return FlushToTexture(batch, depth);
+        }
 
         public float TextBounds(float x, float y, StringSegment str, ref Bounds bounds)
 		{
@@ -682,6 +756,7 @@ namespace FontStashSharp
         //Add Depth Parameter
 		private void Flush(SpriteBatch batch, float depth)
 		{
+            //Texture = null;
 			if (Texture == null) Texture = new Texture2D(batch.GraphicsDevice, _params_.Width, _params_.Height);
 
 			if (_dirtyRect[0] < _dirtyRect[2] && _dirtyRect[1] < _dirtyRect[3])
@@ -727,8 +802,63 @@ namespace FontStashSharp
 				_vertsNumber = 0;
 			}
 		}
+        private Texture2D FlushToTexture(SpriteBatch batch, float depth)
+        {
 
-		private void AddVertex(Rectangle destRect, Rectangle srcRect, Color c)
+            if (Texture2 == null) Texture2 = new Texture2D(batch.GraphicsDevice, _params_.Width, _params_.Height);
+
+            if (_dirtyRect[0] < _dirtyRect[2] && _dirtyRect[1] < _dirtyRect[3])
+            {
+                if (_texData != null)
+                {
+                    var x = _dirtyRect[0];
+                    var y = _dirtyRect[1];
+                    var w = _dirtyRect[2] - x;
+                    var h = _dirtyRect[3] - y;
+                    var sz = w * h;
+                    for (var xx = x; xx < x + w; ++xx)
+                    {
+                        for (var yy = y; yy < y + h; ++yy)
+                        {
+                            var destPos = yy * _params_.Width + xx;
+
+                            var c = _texData[destPos];
+                            _colorData[destPos].R = c;
+                            _colorData[destPos].G = c;
+                            _colorData[destPos].B = c;
+                            _colorData[destPos].A = c;
+                        }
+                    }
+
+                    Texture2.SetData(_colorData);
+                }
+
+                _dirtyRect[0] = _params_.Width;
+                _dirtyRect[1] = _params_.Height;
+                _dirtyRect[2] = 0;
+                _dirtyRect[3] = 0;
+            }
+
+
+
+            /*终于搞清是干嘛的了，从字库中取出所有用到的字在组合成想要的句子文本
+            if (_vertsNumber > 0)
+            {
+                for (var i = 0; i < _vertsNumber; ++i)
+                {
+                    //Add Depth Parameter
+                    batch.Draw(Texture2, _verts[i], _textureCoords[i], _colors[i], 0f, Vector2.Zero, SpriteEffects.None, depth);
+                }
+
+                _vertsNumber = 0;
+            }
+            */
+            _vertsNumber = 0;
+            return Texture2;
+        }
+
+
+        private void AddVertex(Rectangle destRect, Rectangle srcRect, Color c)
 		{
 			_verts[_vertsNumber] = destRect;
 			_textureCoords[_vertsNumber] = srcRect;

@@ -328,7 +328,7 @@ namespace GameManager
         public static Bounds Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, float scale, float depth = 0f)
         {
             Texture2D tex = LoadTexture(name);
-            
+
             if (tex != null && !tex.IsDisposed)
             {
                 Session.Current.SpriteBatch.Draw(tex, pos, source, color, 0f, Vector2.Zero, scale, effect, depth);
@@ -336,7 +336,7 @@ namespace GameManager
 
             if (source == null)
                 return new Bounds();
-            return new Bounds() { X = pos.X, Y = pos.Y,X2=pos.X+source.Value.Width*scale,Y2=pos.Y+source.Value.Height*scale };
+            return new Bounds() { X = pos.X, Y = pos.Y, X2 = pos.X + source.Value.Width * scale, Y2 = pos.Y + source.Value.Height * scale };
         }
 
         public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, SpriteEffects effect, Vector2 scale, float depth = 0f)
@@ -350,7 +350,7 @@ namespace GameManager
             {
 
             }
-            
+
         }
 
         public static void Draw(string name, Vector2 pos, Rectangle? source, Color color, float rotation, SpriteEffects effect, Vector2 scale)
@@ -472,7 +472,7 @@ namespace GameManager
                     if (Scale != Vector2.One)
                     {
                         pos = new Rectangle(Convert.ToInt16(pos.X * Scale.X), Convert.ToInt16(pos.Y * Scale.Y), Convert.ToInt16(pos.Width * Scale.X), Convert.ToInt16(pos.Height * Scale.Y));
-                    }                    
+                    }
                     Session.Current.SpriteBatch.Draw(tex, pos, null, color, 0f, Vector2.Zero, SpriteEffects.None, depth);
                 }
             }
@@ -517,7 +517,7 @@ namespace GameManager
 
             if (Platform.Current.FileExists(id))
             {
-                
+
             }
             else
             {
@@ -525,7 +525,7 @@ namespace GameManager
 
                 if (Platform.Current.FileExists(id))
                 {
-                        
+
                 }
                 else
                 {
@@ -601,7 +601,18 @@ namespace GameManager
                 TextManager.DrawTexts(text, FontPair, pos, color, 0, scale, layerDepth);
             }
         }
+        public static List<Texture2D> DrawStringToTexture(SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
+        {
+            if (!String.IsNullOrEmpty(text))
+            {
+                text = CheckTextCache(font, text, checkTradition, upload);
+                //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
+                return TextManager.DrawTextsToTexture(text, FontPair, pos, color, 0, scale, layerDepth);
+            }
+            else
+                return null;
+        }
         /// <summary>
         /// 画文字并返回文字范围的矩形列表（支持多行文字）
         /// </summary>
@@ -619,13 +630,13 @@ namespace GameManager
         /// <returns>返回文字范围的矩形列表</returns>
         public static List<Bounds> DrawStringReturnBounds(SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
         {
-            List<Bounds> bounds=null;
+            List<Bounds> bounds = null;
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);
                 //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
-                bounds=TextManager.DrawTextsReturnBounds(text, FontPair, pos, color, 0, scale, layerDepth);
+                bounds = TextManager.DrawTextsReturnBounds(text, FontPair, pos, color, 0, scale, layerDepth);
             }
             return bounds;
         }

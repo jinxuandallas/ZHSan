@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FontStashSharp;
 
-namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
+namespace GamePanels.Scrollbar
 {
     public interface IContent
     {
@@ -22,7 +22,7 @@ namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
         float Height { get; set; }
         Frame baseFrame { get; set; }
         Texture2D Texture { get; set; }
-        void DrawtoTexture();
+        void DrawTexture();
     }
 
     public class Frame
@@ -39,6 +39,11 @@ namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
         {
             Contorl = new List<IContent>();
             Canvas = null;
+        }
+
+        public void Draw()
+        {
+
         }
     }
 

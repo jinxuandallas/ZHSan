@@ -88,10 +88,20 @@ namespace SpriteFontPlus
 			var result = _fontSystem.DrawText(batch, pos.X, pos.Y, text, depth);
 
 			_fontSystem.Scale = Vector2.One;
-
 			return result;
 		}
 
+        public Texture2D DrawStringToTexture(SpriteBatch batch, string text, Vector2 pos, Color color, Vector2 scale, float depth)
+        {
+            _fontSystem.Color = color;
+            _fontSystem.Scale = scale;
+
+            var result = _fontSystem.DrawTextToTexture(batch, pos.X, pos.Y, text, depth);
+
+            _fontSystem.Scale = Vector2.One;
+            //_fontSystem.Texture = null;
+            return result;
+        }
         public Bounds DrawStringReturnBounds(SpriteBatch batch, string text, Vector2 pos, Color color, Vector2 scale, float depth)
         {
             _fontSystem.Color = color;

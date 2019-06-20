@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FontStashSharp;
-namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
+using GameManager;
+namespace GamePanels.Scrollbar
 {
     class TextContent:IContent
     {
@@ -18,8 +19,14 @@ namespace WorldOfTheThreeKingdoms.GamePanels.Scrollbar
         public float Height { get; set; }
         public Frame baseFrame { get; set; }
         public Texture2D Texture { get; set; }
-        public void DrawtoTexture()
+        public void DrawTexture()
         {
+            List<Texture2D> textures = new List<Texture2D>();
+            textures = CacheManager.DrawStringToTexture(Session.Current.Font, "试试吧看看s试试就试试", new Vector2(60, 60), Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            foreach (Texture2D texture in textures)
+            {
+                Session.Current.SpriteBatch.Draw(texture, new Vector2(200, 200), Color.White);
+            }
         }
     }
 }
