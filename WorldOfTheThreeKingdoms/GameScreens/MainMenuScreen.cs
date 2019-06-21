@@ -1843,7 +1843,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             #region 测试CheckBox
             btCheckBoxList = new List<CheckBox>();
-            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
+            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
             btCheckBox.OnButtonPress += (sender, e) =>
             {
                 var bt = (CheckBox)sender;

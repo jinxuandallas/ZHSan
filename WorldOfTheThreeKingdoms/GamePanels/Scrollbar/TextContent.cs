@@ -25,7 +25,7 @@ namespace GamePanels.Scrollbar
             textures = CacheManager.DrawStringToTexture(Session.Current.Font, "试试吧看看s试试就试试", new Vector2(60, 60), Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             foreach (Texture2D texture in textures)
             {
-                Session.Current.SpriteBatch.Draw(texture, new Vector2(200, 200), Color.White);
+                Session.Current.SpriteBatch.Draw(texture, new Vector2(200, 200), Color.Yellow);
             }
         }
     }

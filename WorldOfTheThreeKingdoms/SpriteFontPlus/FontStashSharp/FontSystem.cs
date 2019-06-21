@@ -5,6 +5,7 @@ using SpriteFontPlus;
 using StbSharp;
 using Platforms;
 using Tools;
+using System.Linq;
 namespace FontStashSharp
 {
 	internal unsafe class FontSystem
@@ -68,7 +69,6 @@ namespace FontStashSharp
 		}
 
 		public Texture2D Texture { get; set; }
-        public Texture2D Texture2 { get; set; }
 
 		public void AddWhiteRect(int w, int h)
 		{
@@ -284,7 +284,7 @@ namespace FontStashSharp
                     GetQuad(font, prevGlyphIndex, glyph, scale, Spacing, ref originX, ref originY, &q);
                     if (_vertsNumber + 6 > 1024)
                     {
-                        FlushToTexture(batch, textbounds.Width * Scale.X, textbounds.Height * Scale.Y);
+                        //FlushToTexture(batch, textbounds.Width * Scale.X, textbounds.Height * Scale.Y);
                     }
 
                     q.X0 = (int)(q.X0 * Scale.X);
@@ -808,11 +808,20 @@ namespace FontStashSharp
 				_vertsNumber = 0;
 			}
 		}
+
+        /// <summary>
+        /// 将文字输出到材质画布上
+        /// </summary>
+        /// <param name="batch">SpriteBatch</param>
+        /// <param name="width">画布的宽</param>
+        /// <param name="height">画布的高</param>
+        /// <returns>带文字的画布材质</returns>
         private Texture2D FlushToTexture(SpriteBatch batch, float width,float height)
         {
 
-            if (Texture2 == null) Texture2 = new Texture2D(batch.GraphicsDevice, _params_.Width, _params_.Height);
-            Texture2D textTexture = new Texture2D(batch.GraphicsDevice,Convert.ToInt16(width),Convert.ToInt16(height));
+            if (Texture == null) Texture = new Texture2D(batch.GraphicsDevice, _params_.Width, _params_.Height);
+            //创建画有文字的画布
+            Texture2D textTexture = new Texture2D(batch.GraphicsDevice,Convert.ToInt16(width+0.5),Convert.ToInt16(height+0.5));//宽度+0.5是为了防止float转int截断，加0.5后只有float有小数int就进一
 
             if (_dirtyRect[0] < _dirtyRect[2] && _dirtyRect[1] < _dirtyRect[3])
             {
@@ -837,7 +846,7 @@ namespace FontStashSharp
                         }
                     }
 
-                    Texture2.SetData(_colorData);
+                    Texture.SetData(_colorData);
                 }
 
                 _dirtyRect[0] = _params_.Width;
@@ -847,21 +856,20 @@ namespace FontStashSharp
             }
 
 
-            
-            ///*终于搞清是干嘛的了，从字库中取出所有用到的字在组合成想要的句子文本
+
+            //终于搞清是干嘛的了，从字库中取出所有用到的字在组合成想要的句子文本
             if (_vertsNumber > 0)
             {
                 for (var i = 0; i < _vertsNumber; ++i)
                 {
                     //Add Depth Parameter
                     //batch.Draw(Texture2, _verts[i], _textureCoords[i], _colors[i], 0f, Vector2.Zero, SpriteEffects.None, 0);
-                    textTexture.DrawTexture(Texture2, _verts[i], _textureCoords[i], 0);
+                    textTexture.DrawTexture(Texture, _verts[i], _textureCoords[i], new Point(_verts[0].X, _verts.Where(r => r.Y > 0).OrderBy(r => r.Y).FirstOrDefault().Y));
                 }
 
                 _vertsNumber = 0;
             }
-            //*/
-            _vertsNumber = 0;
+            
             return textTexture;
 
         }

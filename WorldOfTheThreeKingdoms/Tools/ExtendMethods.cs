@@ -5,47 +5,41 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using GameManager;
 namespace Tools
 {
     public static class ExtendMethods
     {
-        public static Color[] sourceTextureData;
-        public static Texture2D LoadTexture = null;
-        public static void DrawTexture(this Texture2D canvas, Texture2D sourceTexture, Rectangle destinationRectangle, Rectangle sourceRectangle, int offsetX)
+        /// <summary>
+        /// 将材质插入到另一个更大的材质画布上
+        /// </summary>
+        /// <param name="canvas">更大的目标材质画布</param>
+        /// <param name="sourceTexture">要插入的源材质（一般是包含所有字的字库材质）</param>
+        /// <param name="destinationRectangle">目标矩形</param>
+        /// <param name="sourceRectangle">从源材质调取图形的矩形（调取的字的范围矩形）</param>
+        /// <param name="offset">相对于目标矩形的偏移量</param>
+        public static void DrawTexture(this Texture2D canvas, Texture2D sourceTexture, Rectangle destinationRectangle, Rectangle sourceRectangle, Point offset)
         {
-
+            //创建一个单字的Color[]内存空间
             Color[] sourceWordData = new Color[sourceRectangle.Width * sourceRectangle.Height];
-
-            if (LoadTexture != sourceTexture)
-            {
-                sourceTextureData = new Color[sourceTexture.Width * sourceTexture.Height];
-                sourceTexture.GetData(sourceTextureData);
-                LoadTexture = sourceTexture;
-            }
-
-
-            int i, j, p, sp = 0;
-            //取出单字到sourceWordData
-            for (i = sourceRectangle.X; i < sourceRectangle.X + sourceRectangle.Width; i++)
-                for (j = sourceRectangle.Y; j < sourceRectangle.Y + sourceRectangle.Height; j++)
-                {
-                    p = j * sourceTexture.Width + i;
-                    sourceWordData[sp] = sourceTextureData[p];
-                    sp++;
-                }
-
-            //Color[] canvasData = new Color[canvas.Width * canvas.Height];
-            //for (i = 0; i < canvas.Width; i++)
-            //    for (j = 0; j < canvas.Height; j++)
-            //        canvasData[j * canvas.Width + i] = Color.AliceBlue;
-            //canvas.SetData(canvasData);
-
-
-
-
-            //canvas.SetData(0, new Rectangle(0, 0, sourceRectangle.Width, sourceRectangle.Height), sourceWordData, 0, sourceWordData.Length);
+            //从源材质取出单字内容
+            sourceTexture.GetData(0, sourceRectangle, sourceWordData, 0, sourceRectangle.Width * sourceRectangle.Height);
+            //在新画布相应位置上写上调取的字
+            canvas.SetData(0, new Rectangle(destinationRectangle.X - offset.X, destinationRectangle.Y - offset.Y, destinationRectangle.Width, destinationRectangle.Height), sourceWordData, 0, sourceWordData.Length);
 
         }
+
+        public static void DraweTexture(this Texture2D canvas, Texture2D sourceTexture, Point position)
+        {
+            if (position.X < 0 || position.X > canvas.Width || position.Y < 0 || position.Y > canvas.Height)
+                return;
+            int width = position.X + sourceTexture.Width > canvas.Width ? canvas.Width - position.X : sourceTexture.Width;
+            int height = position.Y + sourceTexture.Height > canvas.Height ? canvas.Height - position.Y : sourceTexture.Height;
+            Color[] readSourceTexture = new Color[width * height];
+            sourceTexture.GetData(0, new Rectangle(0, 0, width, height), readSourceTexture, 0, readSourceTexture.Length);
+            canvas.SetData(0, new Rectangle(position.X, position.Y, width, height), readSourceTexture, 0, readSourceTexture.Length);
+        }
+
         public static string NullToString(this object o)
         {
             return NullToString(o, "");
