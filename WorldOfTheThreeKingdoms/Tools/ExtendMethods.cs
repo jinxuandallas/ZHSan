@@ -3,11 +3,49 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 namespace Tools
 {
     public static class ExtendMethods
     {
+        public static Color[] sourceTextureData;
+        public static Texture2D LoadTexture = null;
+        public static void DrawTexture(this Texture2D canvas, Texture2D sourceTexture, Rectangle destinationRectangle, Rectangle sourceRectangle, int offsetX)
+        {
+
+            Color[] sourceWordData = new Color[sourceRectangle.Width * sourceRectangle.Height];
+
+            if (LoadTexture != sourceTexture)
+            {
+                sourceTextureData = new Color[sourceTexture.Width * sourceTexture.Height];
+                sourceTexture.GetData(sourceTextureData);
+                LoadTexture = sourceTexture;
+            }
+
+
+            int i, j, p, sp = 0;
+            //取出单字到sourceWordData
+            for (i = sourceRectangle.X; i < sourceRectangle.X + sourceRectangle.Width; i++)
+                for (j = sourceRectangle.Y; j < sourceRectangle.Y + sourceRectangle.Height; j++)
+                {
+                    p = j * sourceTexture.Width + i;
+                    sourceWordData[sp] = sourceTextureData[p];
+                    sp++;
+                }
+
+            //Color[] canvasData = new Color[canvas.Width * canvas.Height];
+            //for (i = 0; i < canvas.Width; i++)
+            //    for (j = 0; j < canvas.Height; j++)
+            //        canvasData[j * canvas.Width + i] = Color.AliceBlue;
+            //canvas.SetData(canvasData);
+
+
+
+
+            //canvas.SetData(0, new Rectangle(0, 0, sourceRectangle.Width, sourceRectangle.Height), sourceWordData, 0, sourceWordData.Length);
+
+        }
         public static string NullToString(this object o)
         {
             return NullToString(o, "");
@@ -84,7 +122,7 @@ namespace Tools
         {
             if (String.IsNullOrEmpty(dateTime))
             {
-                
+
             }
             else
             {
@@ -116,7 +154,7 @@ namespace Tools
         {
             return ((DateTime)dateTime).ToString("yyyyMMddHHmmss");
         }
-        
+
         public static string ToSeasonDateTime(this DateTime dateTime)
         {
             return ((DateTime)dateTime).ToString("yyyy-MM-dd HH:mm:ss");

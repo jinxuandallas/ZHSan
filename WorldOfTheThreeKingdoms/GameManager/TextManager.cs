@@ -59,7 +59,7 @@ namespace GameManager
             //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
         }
 
-        public static List<Texture2D> DrawTextsToTexture(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
+        public static List<Texture2D> DrawTextsToTexture(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f)
         {
             List<Texture2D> textures = new List<Texture2D>();
             if (font == null)
@@ -74,7 +74,7 @@ namespace GameManager
             for (int i = 0; i < texs.Length; i++)
             {
                 var te = texs[i];
-                textures.Add(font.DrawStringToTexture(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth));
+                textures.Add(font.DrawStringToTexture(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale)));
             }
 
             return textures;

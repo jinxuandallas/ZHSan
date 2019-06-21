@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
 using StbSharp;
 using Platforms;
+using Tools;
 namespace FontStashSharp
 {
 	internal unsafe class FontSystem
@@ -230,7 +231,7 @@ namespace FontStashSharp
 			return x;
 		}
 
-        public Texture2D DrawTextToTexture(SpriteBatch batch, float x, float y, StringSegment str, float depth)
+        public Texture2D DrawTextToTexture(SpriteBatch batch, float x, float y, StringSegment str)
         {
             if (str.IsNullOrEmpty) return null;
 
@@ -242,6 +243,11 @@ namespace FontStashSharp
             float scale = 0;
             Font font;
             float width = 0;
+            
+            //确定输出Texture的大小范围
+            var textbounds = new Bounds();
+            TextBounds(x, y, str, ref textbounds);
+
             if (FontId < 0 || FontId >= _fontsNumber)
                 return null;
             font = _fonts[FontId];
@@ -278,7 +284,7 @@ namespace FontStashSharp
                     GetQuad(font, prevGlyphIndex, glyph, scale, Spacing, ref originX, ref originY, &q);
                     if (_vertsNumber + 6 > 1024)
                     {
-                        FlushToTexture(batch, depth);
+                        FlushToTexture(batch, textbounds.Width * Scale.X, textbounds.Height * Scale.Y);
                     }
 
                     q.X0 = (int)(q.X0 * Scale.X);
@@ -299,8 +305,8 @@ namespace FontStashSharp
 
                 prevGlyphIndex = glyph != null ? glyph.Index : -1;
             }
-
-            return FlushToTexture(batch, depth);
+            
+            return FlushToTexture(batch, textbounds.Width*Scale.X, textbounds.Height*Scale.Y);
         }
 
         public float TextBounds(float x, float y, StringSegment str, ref Bounds bounds)
@@ -802,10 +808,11 @@ namespace FontStashSharp
 				_vertsNumber = 0;
 			}
 		}
-        private Texture2D FlushToTexture(SpriteBatch batch, float depth)
+        private Texture2D FlushToTexture(SpriteBatch batch, float width,float height)
         {
 
             if (Texture2 == null) Texture2 = new Texture2D(batch.GraphicsDevice, _params_.Width, _params_.Height);
+            Texture2D textTexture = new Texture2D(batch.GraphicsDevice,Convert.ToInt16(width),Convert.ToInt16(height));
 
             if (_dirtyRect[0] < _dirtyRect[2] && _dirtyRect[1] < _dirtyRect[3])
             {
@@ -840,21 +847,23 @@ namespace FontStashSharp
             }
 
 
-
-            /*终于搞清是干嘛的了，从字库中取出所有用到的字在组合成想要的句子文本
+            
+            ///*终于搞清是干嘛的了，从字库中取出所有用到的字在组合成想要的句子文本
             if (_vertsNumber > 0)
             {
                 for (var i = 0; i < _vertsNumber; ++i)
                 {
                     //Add Depth Parameter
-                    batch.Draw(Texture2, _verts[i], _textureCoords[i], _colors[i], 0f, Vector2.Zero, SpriteEffects.None, depth);
+                    //batch.Draw(Texture2, _verts[i], _textureCoords[i], _colors[i], 0f, Vector2.Zero, SpriteEffects.None, 0);
+                    textTexture.DrawTexture(Texture2, _verts[i], _textureCoords[i], 0);
                 }
 
                 _vertsNumber = 0;
             }
-            */
+            //*/
             _vertsNumber = 0;
-            return Texture2;
+            return textTexture;
+
         }
 
 

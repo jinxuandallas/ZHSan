@@ -4895,7 +4895,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
 
                 #region 显示CheckBox
-                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.8f };
+                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.6f };
                 btCheckBoxList.ForEach(cb => cb.Draw(cbs));
                 #endregion
 
@@ -4984,7 +4984,6 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             t.SetData(c);
             //Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
             //Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
-
             TextContent tc = new TextContent();
             tc.DrawTexture();
 

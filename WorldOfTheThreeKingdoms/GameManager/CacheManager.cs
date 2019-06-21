@@ -608,7 +608,7 @@ namespace GameManager
                 text = CheckTextCache(font, text, checkTradition, upload);
                 //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
-                return TextManager.DrawTextsToTexture(text, FontPair, pos, color, 0, scale, layerDepth);
+                return TextManager.DrawTextsToTexture(text, FontPair, pos, color, 0, scale);
             }
             else
                 return null;
