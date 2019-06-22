@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FontStashSharp;
-
+using Tools;
+using Platforms;
 namespace GamePanels.Scrollbar
 {
-    public interface IContent
+    public interface IFrameContent
     {
         /// <summary>
         /// 在框架内的偏移量
@@ -17,7 +18,7 @@ namespace GamePanels.Scrollbar
         Vector2 OffsetPos { get; set; }
         float Scale { get; set; }
         float Depth { get; set; }
-        Bounds[] bounds { get; set; }
+        List<Bounds> bounds { get; set; }
         float Width { get; set; }
         float Height { get; set; }
         Frame baseFrame { get; set; }
@@ -27,21 +28,48 @@ namespace GamePanels.Scrollbar
 
     public class Frame
     {
-        public Vector2 Position;
-        public float Width, Height;
+        //public Vector2 Position;
+        public float CanvasWidth, CanvasHeight;
         public Texture2D BackgroundPic;
-        public List<IContent> Contorl;
+        public List<IFrameContent> ContentContorl;
         protected Texture2D Canvas;
-        public Rectangle? View;
+        public Rectangle? VisualFrame;
         public Color BackgroundColor=Color.LightSkyBlue;
 
-        public Frame(Vector2 pos,string bgPicPath)
+        public Frame(Rectangle visualFrame, string bgPicPath)
         {
-            Contorl = new List<IContent>();
+            ContentContorl = new List<IFrameContent>();
             Canvas = null;
+            VisualFrame = visualFrame;
+            if (bgPicPath != null)
+                BackgroundPic= Platform.Current.LoadTexture(bgPicPath);
         }
 
         public void Draw()
+        {
+            ContentContorl.ForEach(cc => cc.DrawTexture());
+            CalculateCanvasSize();
+            Canvas = new Texture2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
+        }
+        private void CalculateCanvasSize()
+        {
+            CanvasWidth = CanvasHeight = 0;
+            ContentContorl.ForEach(cc => cc.bounds.ForEach(b =>
+            {
+                CanvasWidth = b.X2 > CanvasWidth ? b.X2 : CanvasWidth;
+                CanvasHeight = b.Y2 > CanvasHeight ? b.Y2 : CanvasHeight;
+            }));
+        }
+        public void AddContentContorl(IFrameContent contentContorl)
+        {
+            ContentContorl.Add(contentContorl);
+        }
+        private void DrawFrame()
+        {
+
+        }
+        
+        private void DrawBackground()
         {
 
         }

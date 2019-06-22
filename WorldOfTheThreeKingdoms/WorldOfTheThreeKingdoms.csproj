@@ -1450,6 +1450,7 @@
     <Compile Include="GamePanels\NumericSetTexture.cs" />
     <Compile Include="GamePanels\Scrollbar\Frame.cs" />
     <Compile Include="GamePanels\Scrollbar\TextContent.cs" />
+    <Compile Include="GamePanels\Scrollbar\TextureContent.cs" />
     <Compile Include="GamePanels\TextBox.cs" />
     <Compile Include="GamePlugins\AirViewPlugin\AirView.cs" />
     <Compile Include="GamePlugins\AirViewPlugin\AirViewPlugin.cs" />

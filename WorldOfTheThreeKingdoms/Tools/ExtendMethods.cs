@@ -11,7 +11,17 @@ namespace Tools
     public static class ExtendMethods
     {
         /// <summary>
-        /// 将材质插入到另一个更大的材质画布上
+        /// float转int小数自动进一位
+        /// </summary>
+        /// <param name="source">原float数</param>
+        /// <returns>返回转换后的int</returns>
+        public static int ConvertToIntPlus(this float source)
+        {
+            return Convert.ToInt32(source + 0.5);
+        }
+
+        /// <summary>
+        /// 从源材质取出一部分内容添加到新的画布上
         /// </summary>
         /// <param name="canvas">更大的目标材质画布</param>
         /// <param name="sourceTexture">要插入的源材质（一般是包含所有字的字库材质）</param>
@@ -29,7 +39,7 @@ namespace Tools
 
         }
 
-        public static void DraweTexture(this Texture2D canvas, Texture2D sourceTexture, Point position)
+        public static void DrawTexture(this Texture2D canvas, Texture2D sourceTexture, Point position)
         {
             if (position.X < 0 || position.X > canvas.Width || position.Y < 0 || position.Y > canvas.Height)
                 return;

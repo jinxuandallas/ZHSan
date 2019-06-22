@@ -601,14 +601,14 @@ namespace GameManager
                 TextManager.DrawTexts(text, FontPair, pos, color, 0, scale, layerDepth);
             }
         }
-        public static List<Texture2D> DrawStringToTexture(SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
+        public static Texture2D DrawStringToTexture(SpriteFont font, string text, Color color, float layerDepth, bool checkTradition = false, bool upload = false)
         {
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);
                 //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
-                return TextManager.DrawTextsToTexture(text, FontPair, pos, color, 0, scale);
+                return TextManager.DrawTextsToTexture(text, FontPair, new Vector2(60,60), color, 0, 1f);
             }
             else
                 return null;

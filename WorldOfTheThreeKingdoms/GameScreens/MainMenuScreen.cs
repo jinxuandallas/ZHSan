@@ -4984,7 +4984,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             t.SetData(c);
             //Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
             //Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
-            TextContent tc = new TextContent();
+            TextContent tc = new TextContent(new Vector2(1,1), "试试吧看看s试\n试就试试", null);
             tc.DrawTexture();
 
 

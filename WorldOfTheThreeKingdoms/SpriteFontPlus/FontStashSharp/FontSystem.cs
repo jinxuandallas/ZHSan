@@ -284,7 +284,7 @@ namespace FontStashSharp
                     GetQuad(font, prevGlyphIndex, glyph, scale, Spacing, ref originX, ref originY, &q);
                     if (_vertsNumber + 6 > 1024)
                     {
-                        //FlushToTexture(batch, textbounds.Width * Scale.X, textbounds.Height * Scale.Y);
+                        FlushToTexture(batch, textbounds.Width * Scale.X, textbounds.Height * Scale.Y);
                     }
 
                     q.X0 = (int)(q.X0 * Scale.X);
@@ -864,7 +864,7 @@ namespace FontStashSharp
                 {
                     //Add Depth Parameter
                     //batch.Draw(Texture2, _verts[i], _textureCoords[i], _colors[i], 0f, Vector2.Zero, SpriteEffects.None, 0);
-                    textTexture.DrawTexture(Texture, _verts[i], _textureCoords[i], new Point(_verts[0].X, _verts.Where(r => r.Y > 0).OrderBy(r => r.Y).FirstOrDefault().Y));
+                    textTexture.DrawTexture(Texture, _verts[i], _textureCoords[i], new Point(_verts[0].X, _verts.Take(_vertsNumber).Where(r => r.Y > 0).OrderBy(r => r.Y).FirstOrDefault().Y));//Linq语句的意思是从所有文字（剔除杂项）的坐标中取出Y值最小的作为Y的偏移量
                 }
 
                 _vertsNumber = 0;
