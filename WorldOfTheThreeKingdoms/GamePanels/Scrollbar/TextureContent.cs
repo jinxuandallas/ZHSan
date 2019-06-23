@@ -31,6 +31,16 @@ namespace GamePanels.Scrollbar
             Height = Texture.Height * Scale;
             bounds = new List<Bounds>();
             bounds.Add(new Bounds() { X = OffsetPos.X, Y = OffsetPos.Y, X2 = OffsetPos.X + Width, Y2 = OffsetPos.Y + Height });
+            GraphicsDevice gd = Platform.GraphicsDevice;
+            SpriteBatch batch1 = new SpriteBatch(gd);
+            RenderTarget2D renderTarget2D = new RenderTarget2D(gd, 300, 300);
+            gd.SetRenderTarget(renderTarget2D);
+            gd.Clear(Color.AliceBlue);
+            batch1.Begin();
+            batch1.Draw(Texture, new Vector2(50, 50), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
+            batch1.End();
+            gd.SetRenderTarget(null);
+            Texture = renderTarget2D;
         }
 
         public TextureContent(Vector2 offsetPos, string texturePath, Frame baseframe, float scale = 1f, float depth = 0)

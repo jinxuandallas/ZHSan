@@ -4953,8 +4953,14 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
         private void TestTexture2D()
         {
+            GraphicsDevice gd = Platform.GraphicsDevice;
+            SpriteBatch batch1 = new SpriteBatch(gd);
+            RenderTarget2D renderTarget2D = new RenderTarget2D(gd,300,300,false,gd.PresentationParameters.BackBufferFormat,DepthFormat.Depth24);
+            gd.SetRenderTarget(renderTarget2D);
+            gd.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+            
             ///还有一个问题，滚动条内是否可以有按钮等控件
-            Texture2D t = new Texture2D(Platform.GraphicsDevice, 400, 200);
+            Texture2D t = new Texture2D(gd, 400, 200);
             Texture2D tt = Platform.Current.LoadTexture(@"Content\Textures\Resources\Start\ExitGame.png");
             Color[] c = new Color[400 * 200];
             for (int i = 0; i < 100; i++)
@@ -4969,7 +4975,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             Color[] c2 = new Color[tt.Width * tt.Height];
             tt.GetData(c2);
 
-            Texture2D t3 = new Texture2D(Platform.GraphicsDevice, tt.Width, tt.Height);
+            Texture2D t3 = new Texture2D(gd, tt.Width, tt.Height);
             t3.SetData(c2,0,c2.Length);
             for (int i = 100; i < tt.Width+100; i++)
                 for (int j = 50; j < tt.Height+50; j++)
@@ -4984,11 +4990,25 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             t.SetData(c);
             //Session.Current.SpriteBatch.Draw(t, new Vector2(100, 200), Color.White);
             //Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
-            TextContent tc = new TextContent(new Vector2(1,1), "试试吧看看s试\n试就试试", null);
-            tc.DrawTexture();
+            //TextContent tc = new TextContent(new Vector2(1, 1), "试试吧看看s试\n试就试试", null);
+            //tc.DrawTexture();
+            ///*
 
 
+            batch1.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                SamplerState.LinearClamp, DepthStencilState.Default,
+                RasterizerState.CullNone);
+            batch1.Draw(t, new Vector2(50, 50), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+            batch1.Draw(t3, new Vector2(150, 150), Color.White);
+            batch1.End();
+            gd.SetRenderTarget(null);
+            //*/
+            //Matrix m=Matrix.CreateScale()
+            Session.Current.SpriteBatch.Draw(renderTarget2D, new Vector2(400, 50), Color.White);
 
+            TextureContent textureContent = new TextureContent(new Vector2(1, 1), @"Content\Textures\Resources\Start\ExitGame.png", null);
+            textureContent.DrawTexture();
+            Session.Current.SpriteBatch.Draw(textureContent.Texture, new Vector2(0, 50), Color.White);
         }
     }
 }

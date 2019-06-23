@@ -47,6 +47,9 @@ namespace GamePanels.Scrollbar
 
         public void Draw()
         {
+            RenderTarget2D r = new RenderTarget2D(Platform.GraphicsDevice, 100, 100);
+            Texture2D t = r;
+            GameManager.Session.Current.SpriteBatch.Draw(r, new Vector2(1,1), Color.White);
             ContentContorl.ForEach(cc => cc.DrawTexture());
             CalculateCanvasSize();
             Canvas = new Texture2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
