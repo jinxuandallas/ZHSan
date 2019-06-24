@@ -9,7 +9,7 @@ using FontStashSharp;
 using GameManager;
 namespace GamePanels.Scrollbar
 {
-    class TextContent:IFrameContent
+    class TextContent : IFrameContent
     {
         public Vector2 OffsetPos { get; set; }
         public float Scale { get; set; }
@@ -20,23 +20,30 @@ namespace GamePanels.Scrollbar
         public Frame baseFrame { get; set; }
         public Texture2D Texture { get; set; }
         public string Text;
-        public void DrawTexture()
+        public Color TextColor;
+        public float Alpha { get; set; }
+        public void DrawToCanvas(SpriteBatch batch)
         {
-            Texture = CacheManager.DrawStringToTexture(Session.Current.Font, Text, Color.Red, 0f);
-            Session.Current.SpriteBatch.Draw(Texture, new Vector2(200, 200), Color.Yellow);
-            Width = Texture.Width*Scale;
-            Height = Texture.Height*Scale;
-            bounds = new List<Bounds>();
-            bounds.Add(new Bounds() {X=OffsetPos.X,Y=OffsetPos.Y,X2= OffsetPos.X+Width,Y2=OffsetPos.Y+Height });
+            bounds = CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, TextColor * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
+
+        }
+        public void CalculateControlSize()
+        {
+            bounds = CacheManager.CalculateTextBounds(Session.Current.Font, Text, OffsetPos, Scale);
+            Width = 0;
+            bounds.ForEach(b => Width = Width > b.Width ? Width : b.Width);
+            Height = bounds[bounds.Count - 1].Y2 - bounds[0].Y;
         }
 
-        public TextContent(Vector2 offsetPos,string text, Frame baseframe,float scale=1f,float depth=0)
+        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0)
         {
             OffsetPos = offsetPos;
             Text = text;
             baseFrame = baseframe;
             Scale = scale;
             Depth = depth;
+            Alpha = 1f;
+            TextColor = textColor ?? Color.White;
         }
     }
 }

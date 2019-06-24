@@ -60,40 +60,6 @@ namespace GameManager
             //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
         }
 
-        public static Texture2D DrawTextsToTexture(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f)
-        {
-            List<Texture2D> textures = new List<Texture2D>();
-            Texture2D texture=null,canvas;
-            if (font == null)
-            {
-                Init(pair.Name, pair.Size);
-            }
-
-            text = text.Replace("\r\n", "\n").Replace("\r", "\n");
-
-            var texs = text.Split('\n');
-
-            int height = Convert.ToInt16(texs.Length * pair.Size * scale+0.5);
-            int width=0;
-            for (int i = 0; i < texs.Length; i++)
-            {
-                var te = texs[i];
-                texture = font.DrawStringToTexture(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale));
-                width = width > texture.Width ? width : texture.Width;
-                textures.Add(texture);
-            }
-
-            if (texs.Length > 1)
-            {
-                canvas = new Texture2D(Platform.GraphicsDevice, width, height);
-                for (int i = 0; i < texs.Length; i++)
-                    canvas.DrawTexture(textures[i], new Point(0, (int)(i * pair.Size * scale)));
-                return canvas;
-            }
-            else
-                return texture;
-            //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
-        }
         public static List<Bounds> DrawTextsReturnBounds(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
         {
             List<Bounds> bounds = new List<Bounds>();
@@ -111,14 +77,75 @@ namespace GameManager
             {
                 var te = texs[i];
 
-                bound=font.DrawStringReturnBounds(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth);
-                if(scale!=1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
+                bound = font.DrawStringReturnBounds(Session.Current.SpriteBatch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth);
+                if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
                 {
                     bound.X2 = bound.X + bound.Width * scale;
                     bound.Y2 = bound.Y + bound.Height * scale;
                 }
                 bounds.Add(bound);
-                    
+
+            }
+
+            return bounds;
+            //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
+        }
+        public static List<Bounds> DrawTextsReturnBounds(SpriteBatch batch, string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, Microsoft.Xna.Framework.Color color, int space = 0, float scale = 1f, float? depth = null)
+        {
+            List<Bounds> bounds = new List<Bounds>();
+            Bounds bound;
+            if (font == null)
+            {
+                Init(pair.Name, pair.Size);
+            }
+
+            text = text.Replace("\r\n", "\n").Replace("\r", "\n");
+
+            var texs = text.Split('\n');
+
+            for (int i = 0; i < texs.Length; i++)
+            {
+                var te = texs[i];
+
+                bound = font.DrawStringReturnBounds(batch, te, pos + new Vector2(0, i * pair.Size * scale), color, new Vector2(scale, scale), depth == null ? 0 : (float)depth);
+                if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
+                {
+                    bound.X2 = bound.X + bound.Width * scale;
+                    bound.Y2 = bound.Y + bound.Height * scale;
+                }
+                bounds.Add(bound);
+
+            }
+
+            return bounds;
+            //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
+        }
+
+        public static List<Bounds> CalcTextsBounds(string text, FontPair pair, Microsoft.Xna.Framework.Vector2 pos, int space = 0, float scale = 1f, float? depth = null)
+        {
+            List<Bounds> bounds = new List<Bounds>();
+            Bounds bound;
+            if (font == null)
+            {
+                Init(pair.Name, pair.Size);
+            }
+
+            text = text.Replace("\r\n", "\n").Replace("\r", "\n");
+
+            var texs = text.Split('\n');
+
+            for (int i = 0; i < texs.Length; i++)
+            {
+                var te = texs[i];
+
+                bound = font.CalcStringBounds(te, pos + new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
+                if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
+                {
+                    bound.X2 = bound.X + bound.Width * scale;
+                    bound.Y2 = bound.Y + bound.Height * scale;
+                }
+                bounds.Add(bound);
+
             }
 
             return bounds;

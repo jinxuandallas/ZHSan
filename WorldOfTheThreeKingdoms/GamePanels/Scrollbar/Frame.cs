@@ -18,23 +18,30 @@ namespace GamePanels.Scrollbar
         Vector2 OffsetPos { get; set; }
         float Scale { get; set; }
         float Depth { get; set; }
+        
         List<Bounds> bounds { get; set; }
         float Width { get; set; }
         float Height { get; set; }
         Frame baseFrame { get; set; }
-        Texture2D Texture { get; set; }
-        void DrawTexture();
+        //Texture2D Texture { get; set; }
+        float Alpha { get; set; }
+        void DrawToCanvas(SpriteBatch batch);
+        void CalculateControlSize();
     }
 
     public class Frame
     {
         //public Vector2 Position;
         public float CanvasWidth, CanvasHeight;
-        public Texture2D BackgroundPic;
+        public Texture2D BackgroundPic=null;
         public List<IFrameContent> ContentContorl;
         protected Texture2D Canvas;
         public Rectangle? VisualFrame;
-        public Color BackgroundColor=Color.LightSkyBlue;
+        public Color BackgroundColor=Color.White;
+        /// <summary>
+        /// 透明度
+        /// </summary>
+        public float BackgroundAlpha;
 
         public Frame(Rectangle visualFrame, string bgPicPath)
         {
@@ -47,35 +54,47 @@ namespace GamePanels.Scrollbar
 
         public void Draw()
         {
-            RenderTarget2D r = new RenderTarget2D(Platform.GraphicsDevice, 100, 100);
-            Texture2D t = r;
-            GameManager.Session.Current.SpriteBatch.Draw(r, new Vector2(1,1), Color.White);
-            ContentContorl.ForEach(cc => cc.DrawTexture());
+            if (ContentContorl.Count < 1)
+                return;
             CalculateCanvasSize();
-            Canvas = new Texture2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
+            SpriteBatch batch = new SpriteBatch(Platform.GraphicsDevice);
+            RenderTarget2D renderTarget2D = new RenderTarget2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
+            Platform.GraphicsDevice.SetRenderTarget(renderTarget2D);
+
+            if (BackgroundPic == null)
+                Platform.GraphicsDevice.Clear(BackgroundColor);
+            else
+                batch.Draw(BackgroundPic, new Vector2(0, 0), Color.White * BackgroundAlpha);
+
+            batch.Begin();
+            DrawBorder();
+            ContentContorl.ForEach(cc => cc.DrawToCanvas(batch));
+            batch.End();
+
+            Platform.GraphicsDevice.SetRenderTarget(null);
+            Canvas = renderTarget2D;
+
+            GameManager.Session.Current.SpriteBatch.Draw(Canvas, new Vector2(50, 50), Color.White);
         }
         private void CalculateCanvasSize()
         {
             CanvasWidth = CanvasHeight = 0;
-            ContentContorl.ForEach(cc => cc.bounds.ForEach(b =>
+            ContentContorl.ForEach(cc =>
             {
-                CanvasWidth = b.X2 > CanvasWidth ? b.X2 : CanvasWidth;
-                CanvasHeight = b.Y2 > CanvasHeight ? b.Y2 : CanvasHeight;
-            }));
+                cc.CalculateControlSize();
+                CanvasWidth = cc.OffsetPos.X+cc.Width > CanvasWidth ? cc.OffsetPos.X + cc.Width : CanvasWidth;
+                CanvasHeight = cc.OffsetPos.Y+cc.Height > CanvasHeight ? cc.OffsetPos.Y + cc.Height : CanvasHeight;
+            });
         }
         public void AddContentContorl(IFrameContent contentContorl)
         {
             ContentContorl.Add(contentContorl);
         }
-        private void DrawFrame()
+        private void DrawBorder()
         {
 
         }
         
-        private void DrawBackground()
-        {
-
-        }
     }
 
 

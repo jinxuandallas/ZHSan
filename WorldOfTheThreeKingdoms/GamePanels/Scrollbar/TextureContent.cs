@@ -20,29 +20,26 @@ namespace GamePanels.Scrollbar
         public float Width { get; set; }
         public float Height { get; set; }
         public Frame baseFrame { get; set; }
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture;
         public string TexturePath;
-        public void DrawTexture()
+        public float Alpha { get; set; }
+        public Rectangle? source;
+        public Color color;
+        public float Rotation;
+        public Vector2 Origin;
+        public SpriteEffects spriteEffects;
+        public void DrawToCanvas(SpriteBatch batch)
         {
-            if (TexturePath != null)
-                Texture = Platform.Current.LoadTexture(TexturePath);
-            //Session.Current.SpriteBatch.Draw(Texture, new Vector2(200, 200), Color.Yellow);
+            batch.Draw(Texture, OffsetPos, source, color, Rotation, Origin, Scale, spriteEffects, Depth);
+        }
+
+        public void CalculateControlSize()
+        {
             Width = Texture.Width * Scale;
             Height = Texture.Height * Scale;
             bounds = new List<Bounds>();
             bounds.Add(new Bounds() { X = OffsetPos.X, Y = OffsetPos.Y, X2 = OffsetPos.X + Width, Y2 = OffsetPos.Y + Height });
-            GraphicsDevice gd = Platform.GraphicsDevice;
-            SpriteBatch batch1 = new SpriteBatch(gd);
-            RenderTarget2D renderTarget2D = new RenderTarget2D(gd, 300, 300);
-            gd.SetRenderTarget(renderTarget2D);
-            gd.Clear(Color.AliceBlue);
-            batch1.Begin();
-            batch1.Draw(Texture, new Vector2(50, 50), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
-            batch1.End();
-            gd.SetRenderTarget(null);
-            Texture = renderTarget2D;
         }
-
         public TextureContent(Vector2 offsetPos, string texturePath, Frame baseframe, float scale = 1f, float depth = 0)
         {
             OffsetPos = offsetPos;
@@ -50,6 +47,13 @@ namespace GamePanels.Scrollbar
             baseFrame = baseframe;
             Scale = scale;
             Depth = depth;
+            source = null;
+            color = Color.White;
+            Rotation = 0f;
+            Origin = Vector2.Zero;
+            spriteEffects = SpriteEffects.None;
+            if (TexturePath != null)
+                Texture = Platform.Current.LoadTexture(TexturePath);
         }
     }
 }

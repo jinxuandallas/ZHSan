@@ -4955,10 +4955,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         {
             GraphicsDevice gd = Platform.GraphicsDevice;
             SpriteBatch batch1 = new SpriteBatch(gd);
-            RenderTarget2D renderTarget2D = new RenderTarget2D(gd,300,300,false,gd.PresentationParameters.BackBufferFormat,DepthFormat.Depth24);
+            RenderTarget2D renderTarget2D = new RenderTarget2D(gd, 300, 300, false, gd.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
             gd.SetRenderTarget(renderTarget2D);
             gd.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-            
+
             ///还有一个问题，滚动条内是否可以有按钮等控件
             Texture2D t = new Texture2D(gd, 400, 200);
             Texture2D tt = Platform.Current.LoadTexture(@"Content\Textures\Resources\Start\ExitGame.png");
@@ -4976,9 +4976,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             tt.GetData(c2);
 
             Texture2D t3 = new Texture2D(gd, tt.Width, tt.Height);
-            t3.SetData(c2,0,c2.Length);
-            for (int i = 100; i < tt.Width+100; i++)
-                for (int j = 50; j < tt.Height+50; j++)
+            t3.SetData(c2, 0, c2.Length);
+            for (int i = 100; i < tt.Width + 100; i++)
+                for (int j = 50; j < tt.Height + 50; j++)
                 {
                     int p = j * t.Width + i;
                     int p2 = (j - 50) * tt.Width + i - 100;
@@ -4992,23 +4992,35 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             //Session.Current.SpriteBatch.Draw(t3, new Vector2(300, 400), Color.White);
             //TextContent tc = new TextContent(new Vector2(1, 1), "试试吧看看s试\n试就试试", null);
             //tc.DrawTexture();
-            ///*
+            //
 
-
-            batch1.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-                SamplerState.LinearClamp, DepthStencilState.Default,
-                RasterizerState.CullNone);
+            batch1.Begin();
+            //batch1.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
             batch1.Draw(t, new Vector2(50, 50), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
-            batch1.Draw(t3, new Vector2(150, 150), Color.White);
+            //Session.Current.SpriteBatch.Draw(t, new Vector2(50, 50), Color.White);
+            //Session.Current.SpriteBatch.Draw(t3, new Vector2(50, 150), Color.White);
             batch1.End();
             gd.SetRenderTarget(null);
-            //*/
+            //
             //Matrix m=Matrix.CreateScale()
-            Session.Current.SpriteBatch.Draw(renderTarget2D, new Vector2(400, 50), Color.White);
+            //Session.Current.SpriteBatch.Draw(renderTarget2D, new Vector2(400, 50),Color.White* 0.5f);
+            //batch1.Begin();
+            //batch1.Draw(renderTarget2D, new Vector2(400, 50), Color.White*0.5f);
+            //batch1.End();
 
-            TextureContent textureContent = new TextureContent(new Vector2(1, 1), @"Content\Textures\Resources\Start\ExitGame.png", null);
-            textureContent.DrawTexture();
-            Session.Current.SpriteBatch.Draw(textureContent.Texture, new Vector2(0, 50), Color.White);
+            //TextureContent textureContent = new TextureContent(new Vector2(1, 1), @"Content\Textures\Resources\Start\ExitGame.png", null);
+            //textureContent.DrawTexture();
+            //Session.Current.SpriteBatch.Draw(textureContent.Texture, new Vector2(0, 50), Color.White);
+
+            #region 测试Frame
+
+            Frame frame = new Frame(new Rectangle(0, 0, 100, 100), null);
+            frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
+            frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
+            frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
+            frame.Draw();
+            #endregion
+
         }
     }
 }
