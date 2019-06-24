@@ -61,13 +61,13 @@ namespace GamePanels.Scrollbar
             RenderTarget2D renderTarget2D = new RenderTarget2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
             Platform.GraphicsDevice.SetRenderTarget(renderTarget2D);
 
-            if (BackgroundPic == null)
-                Platform.GraphicsDevice.Clear(BackgroundColor);
-            else
-                batch.Draw(BackgroundPic, new Vector2(0, 0), Color.White * BackgroundAlpha);
-
             batch.Begin();
-            DrawBorder();
+
+            if (BackgroundPic == null)
+                Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
+            else
+                batch.Draw(BackgroundPic, new Vector2(0, 0), Color.White * BackgroundAlpha);//用图片填充背景
+
             ContentContorl.ForEach(cc => cc.DrawToCanvas(batch));
             batch.End();
 
@@ -89,10 +89,6 @@ namespace GamePanels.Scrollbar
         public void AddContentContorl(IFrameContent contentContorl)
         {
             ContentContorl.Add(contentContorl);
-        }
-        private void DrawBorder()
-        {
-
         }
         
     }
