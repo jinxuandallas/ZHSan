@@ -1845,15 +1845,16 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             btSettingList.Add(btOne);
 
             #region 测试
-            //btCheckBoxList = new List<CheckBox>();
-            //var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
-            //btCheckBox.OnButtonPress += (sender, e) =>
-            //{
-            //    var bt = (CheckBox)sender;
-            //    bt.Selected = !bt.Selected;
-            //};
-            //btCheckBoxList.Add(btCheckBox);
-            frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 100, 100), null);
+            btCheckBoxList = new List<CheckBox>();
+            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
+            btCheckBox.OnButtonPress += (sender, e) =>
+            {
+                var bt = (CheckBox)sender;
+                bt.Selected = !bt.Selected;
+            };
+            btCheckBoxList.Add(btCheckBox);
+
+            frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 200, 200), null);
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
@@ -4186,7 +4187,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             {
                 btList.ForEach(bt => bt.Draw());
 
-                #region 测试SetData
+                #region 测试SetData，Frame，Scrollbar
                 TestTexture2D();
                 #endregion 
 
@@ -4903,8 +4904,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
 
                 #region 显示CheckBox
-                //CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.6f };
-                //btCheckBoxList.ForEach(cb => cb.Draw(cbs));
+                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.6f };
+                btCheckBoxList.ForEach(cb => cb.Draw(cbs));
                 #endregion
 
 
@@ -5026,7 +5027,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             //if(frame==null)
             //frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 100, 100), null);
 
-            frame.VisualFrame = new Rectangle(200, h, 100, 100);
+            //frame.VisualFrame = new Rectangle(200, h, 100, 100);
+            frame.VisualFrame.Y = h;
+            frame.VisualFrame.X = 200;
+            //Rectangle? rr = new Rectangle(0, 0, 100, 100);
             //frame.VisualFrame.Value.Offset(0, h);
             frame.Draw();
             h++;

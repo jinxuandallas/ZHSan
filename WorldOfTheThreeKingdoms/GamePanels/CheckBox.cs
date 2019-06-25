@@ -62,6 +62,9 @@ namespace GamePanels
         /// 包含所有材质的资源
         /// </summary>
         public TextureRecs cbTextureRecs { get; set; }
+        /// <summary>
+        /// 透明度
+        /// </summary>
         public float Alpha = 1f;
         public bool Visible = true;
         public float DrawScale = 1f;

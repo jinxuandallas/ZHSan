@@ -24,7 +24,7 @@ namespace GamePanels.Scrollbar
         public float Alpha { get; set; }
         public void DrawToCanvas(SpriteBatch batch)
         {
-            bounds = CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, TextColor * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
+            CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, TextColor * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
 
         }
         public void CalculateControlSize()

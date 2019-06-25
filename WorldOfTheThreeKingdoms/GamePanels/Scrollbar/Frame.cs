@@ -25,7 +25,14 @@ namespace GamePanels.Scrollbar
         Frame baseFrame { get; set; }
         //Texture2D Texture { get; set; }
         float Alpha { get; set; }
+        /// <summary>
+        /// 在画布上绘制控件
+        /// </summary>
+        /// <param name="batch">SpriteBatch</param>
         void DrawToCanvas(SpriteBatch batch);
+        /// <summary>
+        /// 计算每一个控件的尺寸
+        /// </summary>
         void CalculateControlSize();
     }
 
@@ -34,25 +41,28 @@ namespace GamePanels.Scrollbar
         public Vector2 Position;
         public float CanvasWidth, CanvasHeight;
         public Texture2D BackgroundPic = null;
-        public List<IFrameContent> ContentContorl;
+        public List<IFrameContent> ContentContorls;
         protected Texture2D Canvas;
-        public Rectangle? VisualFrame;
+        public Rectangle VisualFrame;
         public Color BackgroundColor = new Color(0, 0, 0, 0);
         /// <summary>
         /// 透明度
         /// </summary>
         public float BackgroundAlpha;
-        public float Scale;
         public Color color;
-        public float Rotation;
-        public Vector2 Origin;
-        public SpriteEffects spriteEffects;
         public float Depth;
         private SpriteBatch batch;
         private RenderTarget2D renderTarget2D;
-        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null)
+        public float Aplha;
+        public bool HasHorizontalScrollbar;
+        public bool HasVerticalScrollbar;
+        protected Scrollbar HorizontalScrollbar;
+        protected Scrollbar VerticalScrollbar;
+
+
+        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, bool horizontalScrollbar = true, bool verticalScrollbar = true)
         {
-            ContentContorl = new List<IFrameContent>();
+            ContentContorls = new List<IFrameContent>();
             Canvas = null;
             Position = pos;
             VisualFrame = visualFrame;
@@ -60,52 +70,64 @@ namespace GamePanels.Scrollbar
                 BackgroundPic = Platform.Current.LoadTexture(bgPicPath);
 
             color = Color.White;
-            Rotation = 0f;
-            Scale = 1f;
-            Origin = Vector2.Zero;
+            Aplha = alpha;
             Depth = 0f;
-            spriteEffects = SpriteEffects.None;
+
             CanvasWidth = CanvasHeight = 0;
 
             batch = new SpriteBatch(Platform.GraphicsDevice);
+
+            HasHorizontalScrollbar = HasVerticalScrollbar = true;
+
+            if (HasHorizontalScrollbar)
+                HorizontalScrollbar = new Scrollbar(this, ScrollbarType.Horizontal);
+            if (HasVerticalScrollbar)
+                VerticalScrollbar = new Scrollbar(this);
         }
 
         public void Draw()
         {
-            if (ContentContorl.Count < 1)
+            if (ContentContorls.Count < 1)
                 return;
-            //RenderTarget2D renderTarget2D = new RenderTarget2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
 
 
             Platform.GraphicsDevice.SetRenderTarget(renderTarget2D);
 
             batch.Begin();
 
-            if (BackgroundPic == null)
-                Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
-            else
-                batch.Draw(BackgroundPic, new Vector2(0, 0), Color.White * BackgroundAlpha);//用图片填充背景
+            //if (BackgroundPic == null)
+            Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
 
-            ContentContorl.ForEach(cc => cc.DrawToCanvas(batch));
+            ContentContorls.ForEach(cc => cc.DrawToCanvas(batch));
             batch.End();
 
             Platform.GraphicsDevice.SetRenderTarget(null);
 
             Canvas = renderTarget2D;
+            
+            if (BackgroundPic != null) //绘制背景图片，未测试
+                GameManager.Session.Current.SpriteBatch.Draw(BackgroundPic, Position, VisualFrame, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color * Aplha, 0f, Vector2.Zero, 1f, SpriteEffects.None, Depth);
 
-            GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color, Rotation, Origin, Scale, spriteEffects, Depth);
+            if (HasHorizontalScrollbar)
+                HorizontalScrollbar.Draw();
+            if (HasVerticalScrollbar)
+                VerticalScrollbar.Draw();
             //GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, color);
             //GameManager.Session.Current.SpriteBatch.Draw(Canvas, new Vector2(50, 50), Color.White);
         }
         private void CalculateCanvasSize(IFrameContent contentContorl)
         {
             contentContorl.CalculateControlSize();
-            CanvasWidth = contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth ? contentContorl.OffsetPos.X + contentContorl.Width : CanvasWidth;
-            CanvasHeight = contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight ? contentContorl.OffsetPos.Y + contentContorl.Height : CanvasHeight;
-            if (renderTarget2D !=null)
-                renderTarget2D.Dispose();
-            renderTarget2D = new RenderTarget2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
-            //ContentContorl.ForEach(cc =>
+            if (contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth || contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight)
+            {
+                CanvasWidth = contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth ? contentContorl.OffsetPos.X + contentContorl.Width : CanvasWidth;
+                CanvasHeight = contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight ? contentContorl.OffsetPos.Y + contentContorl.Height : CanvasHeight;
+                if (renderTarget2D != null)
+                    renderTarget2D.Dispose();
+                renderTarget2D = new RenderTarget2D(Platform.GraphicsDevice, CanvasWidth.ConvertToIntPlus(), CanvasHeight.ConvertToIntPlus());
+            }
+            //ContentContorls.ForEach(cc =>
             //{
             //    cc.CalculateControlSize();
             //    CanvasWidth = cc.OffsetPos.X + cc.Width > CanvasWidth ? cc.OffsetPos.X + cc.Width : CanvasWidth;
@@ -114,8 +136,13 @@ namespace GamePanels.Scrollbar
         }
         public void AddContentContorl(IFrameContent contentContorl)
         {
-            ContentContorl.Add(contentContorl);
+            ContentContorls.Add(contentContorl);
             CalculateCanvasSize(contentContorl);
+        }
+        public void Clear()
+        {
+            ContentContorls.Clear();
+            CanvasWidth = CanvasHeight = 0;
         }
 
     }
