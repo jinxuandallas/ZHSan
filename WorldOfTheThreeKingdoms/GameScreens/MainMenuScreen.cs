@@ -46,6 +46,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
     public class MainMenuScreen
     {
+        private static int h = 0;
+
         public MOD[] MODs = null;
 
         public static MainMenuScreen Current = null;
@@ -79,6 +81,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         List<ButtonTexture> btSettingList = null;
 
         List<CheckBox> btCheckBoxList = null;
+        Frame frame = null;
 
         List<LinkButton> lbSettingList = null;
 
@@ -1841,15 +1844,20 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btSettingList.Add(btOne);
 
-            #region 测试CheckBox
-            btCheckBoxList = new List<CheckBox>();
-            var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
-            btCheckBox.OnButtonPress += (sender, e) =>
-            {
-                var bt = (CheckBox)sender;
-                bt.Selected = !bt.Selected;
-            };
-            btCheckBoxList.Add(btCheckBox);
+            #region 测试
+            //btCheckBoxList = new List<CheckBox>();
+            //var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
+            //btCheckBox.OnButtonPress += (sender, e) =>
+            //{
+            //    var bt = (CheckBox)sender;
+            //    bt.Selected = !bt.Selected;
+            //};
+            //btCheckBoxList.Add(btCheckBox);
+            frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 100, 100), null);
+            frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
+            frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
+            frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
+            
             #endregion
 
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(left + 300, heightBase))
@@ -4895,8 +4903,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 //CacheManager.DrawString(Session.Current.Font, "处理材质Alpha", new Vector2(50 + 100, 120 + height * 5f), Color.Black * alpha);
 
                 #region 显示CheckBox
-                CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.6f };
-                btCheckBoxList.ForEach(cb => cb.Draw(cbs));
+                //CheckBoxSetting cbs = new CheckBoxSetting() { Offset = new Vector2(5, 2), Scale = 0.6f };
+                //btCheckBoxList.ForEach(cb => cb.Draw(cbs));
                 #endregion
 
 
@@ -4953,6 +4961,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
         private void TestTexture2D()
         {
+            /*
             GraphicsDevice gd = Platform.GraphicsDevice;
             SpriteBatch batch1 = new SpriteBatch(gd);
             RenderTarget2D renderTarget2D = new RenderTarget2D(gd, 300, 300, false, gd.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
@@ -5011,14 +5020,19 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             //TextureContent textureContent = new TextureContent(new Vector2(1, 1), @"Content\Textures\Resources\Start\ExitGame.png", null);
             //textureContent.DrawTexture();
             //Session.Current.SpriteBatch.Draw(textureContent.Texture, new Vector2(0, 50), Color.White);
-
+            */
             #region 测试Frame
 
-            Frame frame = new Frame(new Rectangle(0, 0, 100, 100), null);
-            frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
-            frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
-            frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
+            //if(frame==null)
+            //frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 100, 100), null);
+
+            frame.VisualFrame = new Rectangle(200, h, 100, 100);
+            //frame.VisualFrame.Value.Offset(0, h);
             frame.Draw();
+            h++;
+            if (h > frame.CanvasHeight)
+                h = 0;
+
             #endregion
 
         }
