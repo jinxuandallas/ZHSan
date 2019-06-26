@@ -1855,6 +1855,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             btCheckBoxList.Add(btCheckBox);
 
             frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 200, 200), null);
+            frame.BackgroundColor = Color.White;
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
@@ -3290,6 +3291,10 @@ namespace WorldOfTheThreeKingdoms.GameScreens
         {
             float seconds = Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
+            #region 测试更新frame
+            frame.Update();
+            #endregion
+
             if (forward)
             {
                 startElapsed = startElapsed + seconds;
@@ -4034,6 +4039,9 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                     cb.Visible = true;
                     cb.Update();
                 });
+
+                
+
                 #endregion
                 //btSettingList.Where(bt => buttons.Contains(bt.ID)).NullToEmptyList().ForEach(bt =>
                 //{
@@ -4185,11 +4193,12 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             if (MenuType == MenuType.None)
             {
-                btList.ForEach(bt => bt.Draw());
-
                 #region 测试SetData，Frame，Scrollbar
                 TestTexture2D();
                 #endregion 
+                btList.ForEach(bt => bt.Draw());
+
+                
 
                 for (int i = 0; i < texts.Length && i <= textLevel; i++)
                 {
@@ -5029,7 +5038,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 
             //frame.VisualFrame = new Rectangle(200, h, 100, 100);
             frame.VisualFrame.Y = h;
-            frame.VisualFrame.X = 200;
+            frame.VisualFrame.X = 0;
             //Rectangle? rr = new Rectangle(0, 0, 100, 100);
             //frame.VisualFrame.Value.Offset(0, h);
             frame.Draw();

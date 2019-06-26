@@ -56,10 +56,8 @@ namespace GamePanels.Scrollbar
         public float Aplha;
         public bool HasHorizontalScrollbar;
         public bool HasVerticalScrollbar;
-        protected Scrollbar HorizontalScrollbar;
-        protected Scrollbar VerticalScrollbar;
-
-
+        protected List<Scrollbar> Scrollbars;
+        protected static object batchlock = new object();
         public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, bool horizontalScrollbar = true, bool verticalScrollbar = true)
         {
             ContentContorls = new List<IFrameContent>();
@@ -77,42 +75,49 @@ namespace GamePanels.Scrollbar
 
             batch = new SpriteBatch(Platform.GraphicsDevice);
 
+            Scrollbars = new List<Scrollbar>();
             HasHorizontalScrollbar = HasVerticalScrollbar = true;
 
+            //Scrollbar HorizontalScrollbar=
             if (HasHorizontalScrollbar)
-                HorizontalScrollbar = new Scrollbar(this, ScrollbarType.Horizontal);
+                Scrollbars.Add(new Scrollbar(this, ScrollbarType.Horizontal));
             if (HasVerticalScrollbar)
-                VerticalScrollbar = new Scrollbar(this);
+                Scrollbars.Add(new Scrollbar(this));
+
+            
+            //if(HasHorizontalScrollbar&&HasVerticalScrollbar)
+            //{
+            //    Scrollbars[0].HandleBothScrollbar(Scrollbars[1]);
+            //    Scrollbars[1].HandleBothScrollbar(Scrollbars[0]);
+            //}
+
         }
 
         public void Draw()
         {
             if (ContentContorls.Count < 1)
                 return;
+            lock (batchlock)
+            {
+                Platform.GraphicsDevice.SetRenderTarget(renderTarget2D);
 
+                batch.Begin();
 
-            Platform.GraphicsDevice.SetRenderTarget(renderTarget2D);
+                //if (BackgroundPic == null)
+                Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
 
-            batch.Begin();
+                ContentContorls.ForEach(cc => cc.DrawToCanvas(batch));
+                batch.End();
 
-            //if (BackgroundPic == null)
-            Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
+                Platform.GraphicsDevice.SetRenderTarget(null);
 
-            ContentContorls.ForEach(cc => cc.DrawToCanvas(batch));
-            batch.End();
+                Canvas = renderTarget2D;
 
-            Platform.GraphicsDevice.SetRenderTarget(null);
-
-            Canvas = renderTarget2D;
-            
-            if (BackgroundPic != null) //绘制背景图片，未测试
-                GameManager.Session.Current.SpriteBatch.Draw(BackgroundPic, Position, VisualFrame, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color * Aplha, 0f, Vector2.Zero, 1f, SpriteEffects.None, Depth);
-
-            if (HasHorizontalScrollbar)
-                HorizontalScrollbar.Draw();
-            if (HasVerticalScrollbar)
-                VerticalScrollbar.Draw();
+                if (BackgroundPic != null) //绘制背景图片，未测试
+                    GameManager.Session.Current.SpriteBatch.Draw(BackgroundPic, Position, VisualFrame, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color * Aplha, 0f, Vector2.Zero, 1f, SpriteEffects.None, Depth);
+            }
+            Scrollbars.ForEach(sb => sb.Draw());
             //GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, color);
             //GameManager.Session.Current.SpriteBatch.Draw(Canvas, new Vector2(50, 50), Color.White);
         }
@@ -143,6 +148,11 @@ namespace GamePanels.Scrollbar
         {
             ContentContorls.Clear();
             CanvasWidth = CanvasHeight = 0;
+        }
+
+        public void Update()
+        {
+            Scrollbars.ForEach(sb => sb.Update());
         }
 
     }
