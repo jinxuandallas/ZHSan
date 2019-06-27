@@ -36,6 +36,14 @@ namespace GamePanels.Scrollbar
         void CalculateControlSize();
     }
 
+    public enum FrameScrollbarType
+    {
+        Horizontal,
+        Vertical,
+        Both,
+        Auto,
+        None
+    }
     public class Frame
     {
         public Vector2 Position;
@@ -56,9 +64,11 @@ namespace GamePanels.Scrollbar
         public float Aplha;
         public bool HasHorizontalScrollbar;
         public bool HasVerticalScrollbar;
-        protected List<Scrollbar> Scrollbars;
+        public List<Scrollbar> Scrollbars;
         protected static object batchlock = new object();
-        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, bool horizontalScrollbar = true, bool verticalScrollbar = true)
+        public FrameScrollbarType frameScrollbarType;
+
+        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, bool horizontalScrollbar = true, bool verticalScrollbar = true,FrameScrollbarType framescrollbartype=FrameScrollbarType.Auto)
         {
             ContentContorls = new List<IFrameContent>();
             Canvas = null;
@@ -70,7 +80,7 @@ namespace GamePanels.Scrollbar
             color = Color.White;
             Aplha = alpha;
             Depth = 0f;
-
+            frameScrollbarType = framescrollbartype;
             CanvasWidth = CanvasHeight = 0;
 
             batch = new SpriteBatch(Platform.GraphicsDevice);
@@ -153,6 +163,11 @@ namespace GamePanels.Scrollbar
         public void Update()
         {
             Scrollbars.ForEach(sb => sb.Update());
+            if (Canvas != null)
+            {
+                VisualFrame.X = (int)(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Horizontal).FirstOrDefault().Value * (Canvas.Width - VisualFrame.Width));
+                VisualFrame.Y = (int)(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Vertical).FirstOrDefault().Value * (Canvas.Height - VisualFrame.Height));
+            }
         }
 
     }

@@ -1859,7 +1859,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
-            
+            frame.AddContentContorl(new TextContent(new Vector2(300, 400), "看看这个怎么样", frame, Color.BlueViolet));
+
             #endregion
 
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(left + 300, heightBase))
@@ -5037,14 +5038,14 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             //frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 100, 100), null);
 
             //frame.VisualFrame = new Rectangle(200, h, 100, 100);
-            frame.VisualFrame.Y = h;
-            frame.VisualFrame.X = 0;
+            //frame.VisualFrame.Y = h;
+            //frame.VisualFrame.X = 0;
             //Rectangle? rr = new Rectangle(0, 0, 100, 100);
             //frame.VisualFrame.Value.Offset(0, h);
             frame.Draw();
-            h++;
-            if (h > frame.CanvasHeight)
-                h = 0;
+            //h++;
+            //if (h > frame.CanvasHeight)
+            //    h = 0;
 
             #endregion
 
