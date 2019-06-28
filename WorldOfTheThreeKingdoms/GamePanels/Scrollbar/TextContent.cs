@@ -63,5 +63,10 @@ namespace GamePanels.Scrollbar
             Alpha = 1f;
             TextColor = textColor ?? Color.White;
         }
+
+        public void UpdateCanvas()
+        {
+
+        }
     }
 }

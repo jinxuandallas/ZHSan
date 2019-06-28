@@ -61,6 +61,10 @@ namespace GamePanels.Scrollbar
         /// 计算控件的尺寸
         /// </summary>
         void CalculateControlSize();
+        /// <summary>
+        /// 画布内控件的更新
+        /// </summary>
+        void UpdateCanvas();
     }
 
     /// <summary>
@@ -329,6 +333,8 @@ namespace GamePanels.Scrollbar
                 if (HasVerticalScrollbar)
                     VisualFrame.Y = (int)(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Vertical).FirstOrDefault().Value * (Canvas.Height - VisualFrame.Height));
             }
+
+            ContentContorls.ForEach(cc => cc.UpdateCanvas());
         }
 
     }

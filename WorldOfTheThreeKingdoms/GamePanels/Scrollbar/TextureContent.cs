@@ -86,5 +86,10 @@ namespace GamePanels.Scrollbar
             if (TexturePath != null)
                 Texture = Platform.Current.LoadTexture(TexturePath);
         }
+
+        public void UpdateCanvas()
+        {
+
+        }
     }
 }

@@ -1859,6 +1859,13 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
+            var contentCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "再试试这个\n试试送出试", new Vector2(50, 300), frame) { ViewTextColor = Color.Green };
+            contentCheckBox.OnButtonPress += (sender, e) =>
+              {
+                  var bt = (CheckBox)sender;
+                  bt.Selected = !bt.Selected;
+              };
+            frame.AddContentContorl(contentCheckBox);
             frame.AddContentContorl(new TextContent(new Vector2(300, 400), "看看这个怎么样", frame, Color.BlueViolet));
 
             #endregion
@@ -4041,7 +4048,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                     cb.Update();
                 });
 
-                
+
 
                 #endregion
                 //btSettingList.Where(bt => buttons.Contains(bt.ID)).NullToEmptyList().ForEach(bt =>
@@ -4199,7 +4206,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 #endregion 
                 btList.ForEach(bt => bt.Draw());
 
-                
+
 
                 for (int i = 0; i < texts.Length && i <= textLevel; i++)
                 {
