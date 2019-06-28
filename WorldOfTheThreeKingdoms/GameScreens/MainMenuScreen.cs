@@ -1854,7 +1854,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btCheckBoxList.Add(btCheckBox);
 
-            frame = new Frame(new Vector2(150, 150), new Rectangle(0, 0, 200, 200), null);
+            frame = new Frame(new Vector2(150, 50), new Rectangle(0, 0, 200, 200), null);
             frame.BackgroundColor = Color.White;
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));

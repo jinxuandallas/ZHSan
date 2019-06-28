@@ -643,6 +643,16 @@ namespace GameManager
             return bounds;
         }
 
+        /// <summary>
+        /// 计算文字的边界范围
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="pos"></param>
+        /// <param name="scale"></param>
+        /// <param name="checkTradition"></param>
+        /// <param name="upload"></param>
+        /// <returns></returns>
         public static List<Bounds> CalculateTextBounds(SpriteFont font, string text, Vector2 pos, float scale,  bool checkTradition = false, bool upload = false)
         {
             List<Bounds> bounds = null;

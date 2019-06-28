@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using GameManager;
 using Platforms;
 using FontStashSharp;
+using GamePanels.Scrollbar;
 
 namespace GamePanels
 {
@@ -44,8 +45,28 @@ namespace GamePanels
     /// <summary>
     /// 复选框，可以改变字体和字号，还有文字与复选框之间的距离
     /// </summary>
-    public class CheckBox
+    public class CheckBox : IFrameContent
     {
+        public Vector2 OffsetPos
+        {
+            get
+            {
+                return Position;
+            }
+            set
+            {
+                Position = value;
+            }
+        }
+        public float Alpha { get; set; }
+        public float Depth { get; set; }
+        /// <summary>
+        /// 包含控件所有范围矩阵的列表
+        /// </summary>
+        public List<Bounds> bounds { get; set; }
+        public float Width { get; set; }
+        public float Height { get; set; }
+        public Frame baseFrame { get; set; }
         public string ID { get; set; }
         public string Name { get; set; }
         /// <summary>
@@ -65,14 +86,13 @@ namespace GamePanels
         /// <summary>
         /// 透明度
         /// </summary>
-        public float Alpha = 1f;
         public bool Visible = true;
         public float DrawScale = 1f;
         public bool Sound = true;
         /// <summary>
         /// 整个控件的缩放倍数
         /// </summary>
-        public float Scale = 1f;
+        public float Scale { get; set; }
         //public SpriteFont ViewFont;
         /// <summary>
         /// 鼠标是否经过
@@ -101,10 +121,10 @@ namespace GamePanels
         public int ExtDis = 0;
         public bool FireEventWhenUnEnable = false;
         public event CheckBoxPressEventHandler OnMouseOver, OnButtonPress;
-        /// <summary>
-        /// 包含控件所有范围矩阵的列表
-        /// </summary>
-        protected List<Bounds> bounds;
+        public Vector2? offsetText;
+        public Color textueColor = Color.White;
+        protected Texture2D Texture;
+        //protected List<Bounds> bounds;
         /// <summary>
         /// 根据是否选择过经过控件决定要显示的材质矩形
         /// </summary>
@@ -157,6 +177,8 @@ namespace GamePanels
             Key = path + "#" + name;
             cbTextureRecs = Session.TextureRecs[Key];
             if (pos != null) Position = (Vector2)pos;
+            Scale = 1f;
+            Alpha = 1f;
         }
 
         /// <summary>
@@ -330,6 +352,28 @@ namespace GamePanels
                 bounds.Add(bound);
 
             }
+
+        }
+
+        public void DrawToCanvas(SpriteBatch batch)
+        {
+            if (Visible)
+            {
+                Texture = Platform.Current.LoadTexture(Path);
+                batch.Draw( Texture,  Position,  cbRectangle , textueColor * Alpha,0f,Vector2.Zero, Scale,SpriteEffects.None,Depth );
+
+                //偏移量要加上画复选框后的宽度
+                offsetText = offsetText == null ? new Vector2(Texture.Width, 2) : offsetText + new Vector2(Texture.Width, 0);//如果偏移量为空则加上默认的偏移量
+
+                bounds = CacheManager.DrawStringReturnBounds(viewFont ?? Session.Current.Font, Text, (basePos == null ? (Vector2)(Position + offset) : (Vector2)(Position + basePos + offset)) * DrawScale, (MouseOver || Selected) ? ViewTextColorMouseOver * Alpha : ViewTextColor * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, 0f);
+
+                bounds.Add(new Bounds() { X = Position.X, Y = Position.Y, X2 = Position.X + Texture.Width, Y2 = Position.Y + Texture.Height });
+
+            }
+        }
+
+        public void CalculateControlSize()
+        {
 
         }
     }

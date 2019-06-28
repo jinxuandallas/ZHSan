@@ -11,6 +11,8 @@ namespace GamePanels.Scrollbar
 {
     class TextContent : IFrameContent
     {
+        public string ID { get; set; }
+        public string Name { get; set; }
         public Vector2 OffsetPos { get; set; }
         public float Scale { get; set; }
         public float Depth { get; set; }
@@ -18,8 +20,13 @@ namespace GamePanels.Scrollbar
         public float Width { get; set; }
         public float Height { get; set; }
         public Frame baseFrame { get; set; }
-        public Texture2D Texture { get; set; }
+        /// <summary>
+        /// 要绘制的文本
+        /// </summary>
         public string Text;
+        /// <summary>
+        /// 文本的颜色
+        /// </summary>
         public Color TextColor;
         public float Alpha { get; set; }
         public void DrawToCanvas(SpriteBatch batch)
@@ -35,8 +42,19 @@ namespace GamePanels.Scrollbar
             Height = bounds[bounds.Count - 1].Y2 - bounds[0].Y;
         }
 
-        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0)
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="offsetPos">文字在画布内的偏移量坐标</param>
+        /// <param name="text">文字文本</param>
+        /// <param name="baseframe">包含文本控件的框架</param>
+        /// <param name="textColor">文本的颜色</param>
+        /// <param name="scale">文本的缩放倍数</param>
+        /// <param name="depth">深度</param>
+        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0, string id = null, string name = null)
         {
+            ID = id;
+            Name = name;
             OffsetPos = offsetPos;
             Text = text;
             baseFrame = baseframe;

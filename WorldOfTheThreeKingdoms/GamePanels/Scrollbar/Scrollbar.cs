@@ -10,6 +10,9 @@ using GameManager;
 
 namespace GamePanels.Scrollbar
 {
+    /// <summary>
+    /// 滚动条类型
+    /// </summary>
     public enum ScrollbarType
     {
         Horizontal,
@@ -17,7 +20,13 @@ namespace GamePanels.Scrollbar
     }
     public class Scrollbar
     {
+        /// <summary>
+        /// 包含滚动条的框架
+        /// </summary>
         public Frame baseFrame;
+        /// <summary>
+        /// 滚动条按钮的像素值
+        /// </summary>
         public float DisValue
         {
             get
@@ -26,6 +35,7 @@ namespace GamePanels.Scrollbar
             }
             set
             {
+                //设置滚动条像素值的边界
                 if (value < 0)
                     _disValue = 0;
                 else if (value > (scrollbarType == ScrollbarType.Horizontal ? BarTexture.Width - ButtonTexture.Width : BarTexture.Height - ButtonTexture.Height))
@@ -35,6 +45,9 @@ namespace GamePanels.Scrollbar
 
             }
         }
+        /// <summary>
+        /// 滚动条的值
+        /// </summary>
         public float Value
         {
             get
@@ -57,25 +70,77 @@ namespace GamePanels.Scrollbar
                     _value = value;
             }
         }
+        /// <summary>
+        /// 滚动条的值
+        /// </summary>
         private float _value;
+        /// <summary>
+        /// 滚动条的边界值
+        /// </summary>
         private float _disValue;
+        /// <summary>
+        /// 滚动条按钮的矩形
+        /// </summary>
         public Rectangle ScrollButton;
+        /// <summary>
+        /// 滚动条按钮的颜色
+        /// </summary>
         public Color ButtonColor = Color.DeepSkyBlue;
+        /// <summary>
+        /// 滚动条空白的颜色
+        /// </summary>
         public Color BarColor = Color.DimGray;
+        /// <summary>
+        /// 滚动条类型
+        /// </summary>
         public ScrollbarType scrollbarType;
+        /// <summary>
+        /// 滚动条按钮的材质
+        /// </summary>
         protected Texture2D ButtonTexture;
+        /// <summary>
+        /// 滚动条的材质
+        /// </summary>
         protected Texture2D BarTexture;
+        /// <summary>
+        /// 是否可见
+        /// </summary>
         public bool Visible = true;
+        /// <summary>
+        /// 是否启用
+        /// </summary>
         public bool Enable = true;
+        /// <summary>
+        /// 鼠标是否经过滚动条
+        /// </summary>
         protected bool MouseOver = false;
+        /// <summary>
+        /// 鼠标是否经过滚动条按钮
+        /// </summary>
         protected bool MouseOverButton = false;
-        protected Vector2 BarPos, ButtonPos;
-        protected DateTime? prePressTime;
+        /// <summary>
+        /// 滚动条和按钮的位置
+        /// </summary>
+        public Vector2 BarPos, ButtonPos;
+        //protected DateTime? prePressTime;
+        /// <summary>
+        /// 鼠标滚轮滚动的距离
+        /// </summary>
         public int RollingDistance;
-        //protected bool prePress;
-        //protected int prePoX = -1;
-        //protected int prePoY = -1;
+        /// <summary>
+        /// 上一次是否按下鼠标左键
+        /// </summary>
         protected bool preDown = false;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="frame">包含滚动条的框架</param>
+        /// <param name="scrollButton">包含按钮宽高设置的矩形</param>
+        /// <param name="buttonColor">按钮颜色</param>
+        /// <param name="barColor">空白颜色</param>
+        /// <param name="type">滚动条的类型</param>
+        /// <param name="rollingDistance">鼠标滚轮的距离</param>
         public Scrollbar(Frame frame, Rectangle scrollButton, Color buttonColor, Color barColor, ScrollbarType type = ScrollbarType.Vertical, int rollingDistance = 20)
         {
             baseFrame = frame;
@@ -87,18 +152,24 @@ namespace GamePanels.Scrollbar
             BarPos = new Vector2();
             ButtonPos = new Vector2();
             RollingDistance = rollingDistance;
+
             //if (type == ScrollbarType.Vertical)
             //    BarColor = Color.Black;
-            ButtonTexture = CreateScollbarTexture(ScrollButton.Width, ScrollButton.Height, ButtonColor);
-            switch (scrollbarType)
+
+            ButtonTexture = CreateScollbarTexture(ScrollButton.Width, ScrollButton.Height, ButtonColor);//生成滚动条按钮的材质
+            switch (scrollbarType)//根据不同类型重新设置框架可是范围和生成滚动条的材质
             {
                 case ScrollbarType.Horizontal:
                     baseFrame.VisualFrame.Height -= ScrollButton.Height;
                     BarTexture = CreateScollbarTexture(baseFrame.VisualFrame.Width, ScrollButton.Height, BarColor);
+                    BarPos.X = baseFrame.Position.X;//将滚动条位置设置放构造函数内可以使滚动条与框架的位置分离
+                    BarPos.Y = baseFrame.Position.Y + baseFrame.VisualFrame.Height;
                     break;
                 case ScrollbarType.Vertical:
                     baseFrame.VisualFrame.Width -= ScrollButton.Width;
                     BarTexture = CreateScollbarTexture(ScrollButton.Width, baseFrame.VisualFrame.Height, BarColor);
+                    BarPos.X = baseFrame.Position.X + baseFrame.VisualFrame.Width;
+                    BarPos.Y = baseFrame.Position.Y;
                     break;
 
             }
@@ -106,10 +177,22 @@ namespace GamePanels.Scrollbar
             DisValue = 0f;//此处必须放在BarTexture生成之后
         }
 
-        public Scrollbar(Frame frame, ScrollbarType type = ScrollbarType.Vertical) : this(frame, type == ScrollbarType.Vertical ? new Rectangle(0, 0, 13, 25) : new Rectangle(0, 0, 25, 13), Color.DeepSkyBlue, Color.DimGray, type)
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="frame">包含滚动条的框架</param>
+        /// <param name="type">滚动条的类型</param>
+        public Scrollbar(Frame frame, ScrollbarType type = ScrollbarType.Vertical) : this(frame, type == ScrollbarType.Vertical ? new Rectangle(0, 0, 13, 28) : new Rectangle(0, 0, 25, 13), Color.DeepSkyBlue, Color.DimGray, type)
         {
         }
 
+        /// <summary>
+        /// 创建滚动条空白或者按钮的材质
+        /// </summary>
+        /// <param name="width">材质的宽</param>
+        /// <param name="height">材质的高</param>
+        /// <param name="color">材质的颜色</param>
+        /// <returns></returns>
         protected Texture2D CreateScollbarTexture(int width, int height, Color color)
         {
             Texture2D tex = new Texture2D(Platform.GraphicsDevice, width, height);
@@ -120,33 +203,32 @@ namespace GamePanels.Scrollbar
 
         public void Draw()
         {
-            //Vector2 buttonPos = new Vector2(), barPos = new Vector2();
 
-            switch (scrollbarType)
+            switch (scrollbarType)//根据滚动条的类型设置滚动条和按钮的位置坐标
             {
                 case ScrollbarType.Horizontal:
-                    BarPos.X = baseFrame.Position.X;
-                    BarPos.Y = baseFrame.Position.Y + baseFrame.VisualFrame.Height;
+                    //BarPos.X = baseFrame.Position.X;//将滚动条位置设置放在Draw方法内可以保障框架位置变动后，滚动条仍能显示在正确位置
+                    //BarPos.Y = baseFrame.Position.Y + baseFrame.VisualFrame.Height;
                     ButtonPos = BarPos + new Vector2(DisValue, 0);
                     break;
                 case ScrollbarType.Vertical:
-                    BarPos.X = baseFrame.Position.X + baseFrame.VisualFrame.Width;
-                    BarPos.Y = baseFrame.Position.Y;
+                    //BarPos.X = baseFrame.Position.X + baseFrame.VisualFrame.Width;
+                    //BarPos.Y = baseFrame.Position.Y;
                     ButtonPos = BarPos + new Vector2(0, DisValue);
                     break;
             }
 
-            Session.Current.SpriteBatch.Draw(BarTexture, BarPos, Color.White);
-            Session.Current.SpriteBatch.Draw(ButtonTexture, ButtonPos, Color.White);
+            Session.Current.SpriteBatch.Draw(BarTexture, BarPos, Color.White);//绘制滚动条
+            Session.Current.SpriteBatch.Draw(ButtonTexture, ButtonPos, Color.White);//绘制滚动条按钮
         }
-        //public void HandleBothScrollbar(Scrollbar anotherScrollbar)
-        //{
-        //    if (scrollbarType == ScrollbarType.Horizontal)
-        //        BarTexture = CreateScollbarTexture(BarTexture.Width - anotherScrollbar.BarTexture.Width, BarTexture.Height, BarColor);
-        //    else
-        //        BarTexture = CreateScollbarTexture(BarTexture.Width, BarTexture.Height, BarColor);
-        //}
-
+        
+        /// <summary>
+        /// 判断鼠标是否经过滚动条
+        /// </summary>
+        /// <param name="poX">鼠标横坐标</param>
+        /// <param name="poY">鼠标纵坐标</param>
+        /// <param name="basePos">偏移量</param>
+        /// <returns></returns>
         public bool IsInTexture(float poX, float poY, Vector2? basePos)
         {
             if (Visible && Enable)
@@ -199,46 +281,41 @@ namespace GamePanels.Scrollbar
         //SoundPlayer player = new SoundPlayer("Content/Textures/Resources/Start/Select");
         public void Update(int poX, int poY, Vector2? basePos, bool press, bool down, bool sound)
         {
-            MouseOver = Enable && IsInTexture(Convert.ToSingle(poX), Convert.ToSingle(poY), basePos) && (poX != 0 || poY != 0);
+            MouseOver = Enable && IsInTexture(Convert.ToSingle(poX), Convert.ToSingle(poY), basePos) && (poX != 0 || poY != 0);//设置鼠标是否经过滚动条的布尔值变量
 
-            if (scrollbarType == ScrollbarType.Vertical && InputManager.PinchMove != 0 && IsInFrame(poX, poY))
+            if (scrollbarType == ScrollbarType.Vertical && InputManager.PinchMove != 0 && IsInFrame(poX, poY))//如果鼠标在框架内滚动滚轮
             {
-                DisValue -= InputManager.PinchMove * RollingDistance;
+                DisValue -= InputManager.PinchMove * RollingDistance;//更改相应的按钮纵坐标像素值
                 InputManager.PinchMove = 0;
                 return;
-
-                //Platform.Current.PlayEffect(@"Content\Sound\Select");
             }
+
+            //如果鼠标释放（按下）
             if (InputManager.IsReleased)//IsReleased一定要放在preDown判定之前，否则永远不会访问到
             {
                 preDown = false;
                 return;
             }
-            if (preDown)
+            if (preDown)//如果鼠标一直按下，即使偏离按钮一样可以起到按下滚动条按钮的功能（拖动按钮）
             {
                 PressBarButton();
                 return;
             }
 
-
-            if (MouseOver)
-                if (MouseOverButton && down && InputManager.IsMoved)
+            if (MouseOver)//如果鼠标经过滚动条
+                if (MouseOverButton && down && InputManager.IsMoved)//判断鼠标释放拖动滚动条按钮
                     PressBarButton();
-                //Platform.Current.PlayEffect(@"Content\Sound\Select");
-                else if (!MouseOverButton && press)
+                else if (!MouseOverButton && press)//如果鼠标单击滚动条空白处
                     //单击滚动条空白处
                     PressBarBlank(poX, poY);
-
-
-            //if (OnMouseOver != null) OnMouseOver.Invoke(null, null);
-            //if (press)
-            //{
-            //    PressButton();
-            //    press = false;
-            //}
-
         }
 
+        /// <summary>
+        /// 判断鼠标是否在框架内
+        /// </summary>
+        /// <param name="poX">鼠标横坐标</param>
+        /// <param name="poY">鼠标纵坐标</param>
+        /// <returns>反正是否在框架内的布尔值</returns>
         protected bool IsInFrame(int poX, int poY)
         {
             bool inFrame = false;
@@ -258,6 +335,9 @@ namespace GamePanels.Scrollbar
             return inFrame;
         }
 
+        /// <summary>
+        /// 按下滚动条按钮的动作
+        /// </summary>
         protected void PressBarButton()
         {
             //InputManager.ClickTime++;
@@ -272,18 +352,7 @@ namespace GamePanels.Scrollbar
             //}
             //prePressTime = now;
 
-            //if (!prePress)
-            //    return;
-            //Value++;
-            //if (!moved)
-            //    return;
-
-
-            //if (prePoX == -1)
-            //    prePoX = poX;
-            //if (prePoY == -1)
-            //    prePoY = poY;
-
+            //根据不同的滚动条类型设置相应的滚动条按钮像素值
             if (scrollbarType == ScrollbarType.Horizontal)
                 DisValue += InputManager.PoXMove;
             //else
@@ -291,12 +360,17 @@ namespace GamePanels.Scrollbar
             if (scrollbarType == ScrollbarType.Vertical)
                 DisValue += InputManager.PoYMove;
             preDown = true;
-            //prePoX = poX;
-            //prePoY = poY;
+            
         }
 
+        /// <summary>
+        /// 点击滚动条空白处
+        /// </summary>
+        /// <param name="poX">鼠标横坐标</param>
+        /// <param name="poY">鼠标纵坐标</param>
         protected void PressBarBlank(int poX, int poY)
         {
+            //根据不同的滚动条类型，设置相应的横纵移动像素值
             if (scrollbarType == ScrollbarType.Horizontal)
             {
                 if (poX < ButtonPos.X)
