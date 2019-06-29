@@ -250,7 +250,7 @@ namespace GamePanels.Scrollbar
                 MouseOver = false;
             }
 
-            if (MouseOver)
+            if (MouseOver)//判断鼠标是否经过滚动条按钮
             {
                 if (basePos == null)
                 {
@@ -290,7 +290,7 @@ namespace GamePanels.Scrollbar
                 return;
             }
 
-            //如果鼠标释放（按下）
+            //如果鼠标释放（按下的按钮）
             if (InputManager.IsReleased)//IsReleased一定要放在preDown判定之前，否则永远不会访问到
             {
                 preDown = false;
@@ -322,6 +322,7 @@ namespace GamePanels.Scrollbar
 
             if (Visible && Enable)
             {
+                //框架范围包括框架可视范围加上滚动条的范围
                 Scrollbar scrollbar;
                 scrollbar = baseFrame.Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Horizontal).FirstOrDefault();
                 int horizontalButtonHeight = scrollbar == null ? 0 : scrollbar.ButtonTexture.Height;

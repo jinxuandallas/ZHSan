@@ -38,7 +38,7 @@ namespace GamePanels.Scrollbar
         /// <summary>
         /// 材质的底色
         /// </summary>
-        public Color color;
+        public Color color { get; set; }
         /// <summary>
         /// 旋转
         /// </summary>

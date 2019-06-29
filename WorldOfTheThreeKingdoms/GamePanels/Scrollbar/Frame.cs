@@ -53,6 +53,10 @@ namespace GamePanels.Scrollbar
         /// </summary>
         float Alpha { get; set; }
         /// <summary>
+        /// 颜色
+        /// </summary>
+        Color color { get; set; }
+        /// <summary>
         /// 在画布上绘制控件
         /// </summary>
         /// <param name="batch">SpriteBatch</param>
@@ -111,7 +115,7 @@ namespace GamePanels.Scrollbar
         /// <summary>
         /// 背景的透明度
         /// </summary>
-        public float BackgroundAlpha;
+        public float BackgroundAlpha=1f;
         /// <summary>
         /// 绘制画布的颜色
         /// </summary>
@@ -152,6 +156,18 @@ namespace GamePanels.Scrollbar
         /// 控件内滚动条类型的设置
         /// </summary>
         public FrameScrollbarType frameScrollbarType;
+        /// <summary>
+        /// 画布的右边界填充距离
+        /// </summary>
+        public int CanvasRightPadding;
+        /// <summary>
+        /// 画布的下边界填充距离
+        /// </summary>
+        public int CanvasBottomPadding;
+        /// <summary>
+        /// 是否固定背景（如果为假则背景画在画布上，随着滚动条移动而有变化）
+        /// </summary>
+        public bool FixedBackground;
 
         /// <summary>
         /// 构造函数
@@ -161,7 +177,7 @@ namespace GamePanels.Scrollbar
         /// <param name="bgPicPath">背景图片的路径</param>
         /// <param name="alpha">画布的透明度</param>
         /// <param name="framescrollbartype">包含滚动条的类型</param>
-        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, FrameScrollbarType framescrollbartype = FrameScrollbarType.Auto)
+        public Frame(Vector2 pos, Rectangle visualFrame, string bgPicPath = null, float alpha = 1f, FrameScrollbarType framescrollbartype = FrameScrollbarType.Auto, int canvasRightPadding = 0, int canvasBottomPadding = 0, bool fixBackground = true)
         {
             ContentContorls = new List<IFrameContent>();
             Canvas = null;
@@ -175,6 +191,9 @@ namespace GamePanels.Scrollbar
             Depth = 0f;
             frameScrollbarType = framescrollbartype;
             CanvasWidth = CanvasHeight = 0;
+            CanvasRightPadding = canvasBottomPadding;
+            CanvasBottomPadding = canvasBottomPadding;
+            FixedBackground = fixBackground;
 
             batch = new SpriteBatch(Platform.GraphicsDevice);//创建SpriteBatch
 
@@ -222,7 +241,12 @@ namespace GamePanels.Scrollbar
 
                 if (BackgroundPic == null)
                     Platform.GraphicsDevice.Clear(BackgroundColor);//背景填充颜色
-
+                else
+                {
+                    Platform.GraphicsDevice.Clear(new Color(0, 0, 0, 0));//如果有背景图片先要将画布底色变成透明
+                    if (!FixedBackground)//如果不是固定背景则将背景绘制到画布上
+                        batch.Draw(BackgroundPic, new Vector2(0, 0), null, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                }
                 ContentContorls.ForEach(cc => cc.DrawToCanvas(batch));//绘制每个控件
                 batch.End();
 
@@ -230,10 +254,10 @@ namespace GamePanels.Scrollbar
 
                 Canvas = renderTarget2D;//将所绘制内容赋值给画布
 
-                if (BackgroundPic != null) //绘制背景图片，未测试
-                    GameManager.Session.Current.SpriteBatch.Draw(BackgroundPic, Position, VisualFrame, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                if (BackgroundPic != null && FixedBackground) //绘制背景图片到固定位置
+                    GameManager.Session.Current.SpriteBatch.Draw(BackgroundPic, Position, null, Color.White * BackgroundAlpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
 
-                //在屏幕上绘制相应的可视框架
+                //在屏幕上将画布绘制到相应的可视框架内
                 GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color * Aplha, 0f, Vector2.Zero, 1f, SpriteEffects.None, Depth);
             }
 
@@ -255,8 +279,6 @@ namespace GamePanels.Scrollbar
                 }
             }
             Scrollbars.ForEach(sb => sb.Draw());
-            //GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, color);
-            //GameManager.Session.Current.SpriteBatch.Draw(Canvas, new Vector2(50, 50), Color.White);
         }
 
         /// <summary>
@@ -268,10 +290,16 @@ namespace GamePanels.Scrollbar
             contentContorl.CalculateControlSize();//计算添加控件的大小
 
             //如果新添加的控件大于现在画布的范围则生成适合新控件大小的画布
-            if (contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth || contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight)
+            if (contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth - CanvasRightPadding || contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight - CanvasBottomPadding)
             {
-                CanvasWidth = contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth ? contentContorl.OffsetPos.X + contentContorl.Width : CanvasWidth;
-                CanvasHeight = contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight ? contentContorl.OffsetPos.Y + contentContorl.Height : CanvasHeight;
+                if (contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth - CanvasRightPadding)
+                    CanvasWidth = contentContorl.OffsetPos.X + contentContorl.Width + CanvasRightPadding;//添加画布边界填充距离
+
+                if (contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight - CanvasBottomPadding)
+                    CanvasHeight = contentContorl.OffsetPos.Y + contentContorl.Height + CanvasBottomPadding;//添加画布边界填充距离
+
+                //CanvasWidth = contentContorl.OffsetPos.X + contentContorl.Width > CanvasWidth ? contentContorl.OffsetPos.X + contentContorl.Width : CanvasWidth;
+                //CanvasHeight = contentContorl.OffsetPos.Y + contentContorl.Height > CanvasHeight ? contentContorl.OffsetPos.Y + contentContorl.Height : CanvasHeight;
 
                 if (renderTarget2D != null)
                     renderTarget2D.Dispose();
@@ -291,6 +319,10 @@ namespace GamePanels.Scrollbar
                 CanvasWidth = cc.OffsetPos.X + cc.Width > CanvasWidth ? cc.OffsetPos.X + cc.Width : CanvasWidth;
                 CanvasHeight = cc.OffsetPos.Y + cc.Height > CanvasHeight ? cc.OffsetPos.Y + cc.Height : CanvasHeight;
             });
+
+            //添加画布边界填充
+            CanvasWidth += CanvasRightPadding;
+            CanvasHeight += CanvasBottomPadding;
 
             if (renderTarget2D != null)
                 renderTarget2D.Dispose();

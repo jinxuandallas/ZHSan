@@ -1854,8 +1854,12 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btCheckBoxList.Add(btCheckBox);
 
-            frame = new Frame(new Vector2(150, 50), new Rectangle(0, 0, 200, 200), null);
+            //frame = new Frame(new Vector2(50, 50), new Rectangle(0, 0, 300, 300) , @"Content\Textures\Resources\Start\TextBox-Big.png");
+            frame = new Frame(new Vector2(50, 50), new Rectangle(0, 0, 300, 300), null);
             frame.BackgroundColor = Color.White;
+            frame.FixedBackground = false;
+            frame.CanvasRightPadding = 50;
+            frame.CanvasBottomPadding = 50;
             frame.AddContentContorl(new TextContent(new Vector2(100, 100), "试试吧\n再试试ss", frame, Color.Yellow));
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
@@ -1866,6 +1870,8 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                   bt.Selected = !bt.Selected;
               };
             frame.AddContentContorl(contentCheckBox);
+
+            frame.AddContentContorl(new ButtonTexture(@"Content\Textures\Resources\Start\ReadyButton", "Cancel", new Vector2(150, 150), frame));
             frame.AddContentContorl(new TextContent(new Vector2(300, 400), "看看这个怎么样", frame, Color.BlueViolet));
 
             #endregion

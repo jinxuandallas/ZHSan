@@ -27,11 +27,11 @@ namespace GamePanels.Scrollbar
         /// <summary>
         /// 文本的颜色
         /// </summary>
-        public Color TextColor;
+        public Color color { get; set; }
         public float Alpha { get; set; }
         public void DrawToCanvas(SpriteBatch batch)
         {
-            CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, TextColor * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
+            CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, color * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
 
         }
         public void CalculateControlSize()
@@ -61,7 +61,7 @@ namespace GamePanels.Scrollbar
             Scale = scale;
             Depth = depth;
             Alpha = 1f;
-            TextColor = textColor ?? Color.White;
+            color = textColor ?? Color.White;
         }
 
         public void UpdateCanvas()

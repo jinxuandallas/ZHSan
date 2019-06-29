@@ -121,10 +121,15 @@ namespace GamePanels
         public int ExtDis = 0;
         public bool FireEventWhenUnEnable = false;
         public event CheckBoxPressEventHandler OnMouseOver, OnButtonPress;
+        /// <summary>
+        /// 控件文字的偏移量（文字与复选框之间的距离）
+        /// </summary>
         public Vector2? offsetText;
-        public Color textueColor = Color.White;
-        protected Texture2D Texture;
-        //protected List<Bounds> bounds;
+        /// <summary>
+        /// 材质的背景色
+        /// </summary>
+        public Color color { get; set; }
+        
         /// <summary>
         /// 根据是否选择过经过控件决定要显示的材质矩形
         /// </summary>
@@ -182,11 +187,22 @@ namespace GamePanels
 
         }
 
-        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null) : this(path, name, text, pos)
+        /// <summary>
+        /// 在框架内调用的构造函数
+        /// </summary>
+        /// <param name="path">包含材质的路径</param>
+        /// <param name="name">材质的名称</param>
+        /// <param name="text">复选框中要显示的文字</param>
+        /// <param name="pos">控件的位置</param>
+        /// <param name="frame">包含控件的上级框架</param>
+        /// <param name="offsettext"></param>
+        /// <param name="id"></param>
+        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null,Color? textureColor=null) : this(path, name, text, pos)
         {
             baseFrame = frame;
             ID = id;
             offsetText = offsettext;
+            color = textureColor ?? Color.White;
         }
 
         /// <summary>
@@ -367,8 +383,7 @@ namespace GamePanels
         {
             if (Visible)
             {
-                Texture = CacheManager.LoadTexture(Path);
-                batch.Draw(Texture, Position, cbRectangle, textueColor * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
+                batch.Draw(CacheManager.LoadTexture(Path), Position, cbRectangle, color * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
 
                 //偏移量要加上画复选框后的宽度
                 //此处必须新建一个新变量，否会可能发生自己累加情况
@@ -385,6 +400,7 @@ namespace GamePanels
             //此处必须新建一个新变量，否会可能发生自己累加情况
             Vector2 _offsetText = (Vector2)(offsetText == null ? new Vector2(((Rectangle)cbRectangle).Width, 2) : offsetText + new Vector2(((Rectangle)cbRectangle).Width, 0));
             bounds = CacheManager.CalculateTextBounds(Session.Current.Font, Text, OffsetPos + _offsetText, Scale);
+            bounds.Add(new Bounds() { X = OffsetPos.X, Y = OffsetPos.Y, X2 = OffsetPos.X + ((Rectangle)cbRectangle).Width, Y2 = OffsetPos.Y + ((Rectangle)cbRectangle).Height });//加上复选框的范围
             Width = 0;
             bounds.ForEach(b => Width = Width > b.Width ? Width : b.Width);
             if (bounds.Count > 1)
