@@ -333,7 +333,7 @@ namespace GamePanels
         /// </summary>
         public void Draw()
         {
-            Draw(null, Color.White * Alpha, 0.8f, null, null, null);
+            Draw(null, Color.White * Alpha, 1f, null, null, null);
         }
 
         /// <summary>
