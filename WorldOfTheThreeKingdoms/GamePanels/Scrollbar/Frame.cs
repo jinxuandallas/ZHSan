@@ -260,16 +260,19 @@ namespace GamePanels.Scrollbar
                 //在屏幕上将画布绘制到相应的可视框架内
                 GameManager.Session.Current.SpriteBatch.Draw(Canvas, Position, VisualFrame, color * Aplha, 0f, Vector2.Zero, 1f, SpriteEffects.None, Depth);
             }
-
             //处理Auto类型的滚动条
             if (frameScrollbarType == FrameScrollbarType.Auto)
             {
-
 
                 if (!HasHorizontalScrollbar && CanvasWidth > VisualFrame.Width)//如果画布宽度大于可视框架宽度且还没有水平滚动条则生成水平滚动条
                 {
                     HasHorizontalScrollbar = true;
                     Scrollbars.Add(new Scrollbar(this, ScrollbarType.Horizontal));
+                }
+                else
+                {
+                    HasHorizontalScrollbar = false;
+                    Scrollbars.Remove(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Horizontal).FirstOrDefault());
                 }
 
                 if (!HasVerticalScrollbar && CanvasHeight > VisualFrame.Height)//如果画布高度大于可视框架高度且还没有垂直滚动条则生成垂直滚动条
@@ -277,7 +280,13 @@ namespace GamePanels.Scrollbar
                     HasVerticalScrollbar = true;
                     Scrollbars.Add(new Scrollbar(this));
                 }
+                else
+                {
+                    HasVerticalScrollbar = false;
+                    Scrollbars.Remove(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Vertical).FirstOrDefault());
+                }
             }
+
             Scrollbars.ForEach(sb => sb.Draw());
         }
 
@@ -313,6 +322,7 @@ namespace GamePanels.Scrollbar
         /// </summary>
         public void ReCalcuateCanvasSize()
         {
+            CanvasWidth = CanvasHeight = 0;
             ContentContorls.ForEach(cc =>
             {
                 cc.CalculateControlSize();

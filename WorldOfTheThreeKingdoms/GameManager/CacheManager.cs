@@ -665,5 +665,18 @@ namespace GameManager
             }
             return bounds;
         }
+
+        public static string AutoWrap(SpriteFont font,string text,Vector2 pos,float lineWidth,float scale, bool checkTradition = false, bool upload = false)
+        {
+            if (!String.IsNullOrEmpty(text))
+            {
+                text = CheckTextCache(font, text, checkTradition, upload);
+                //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
+
+                return TextManager.HandleAutoWrap(text, FontPair, pos, lineWidth, scale);
+            }
+
+            return null;
+        }
     }
 }

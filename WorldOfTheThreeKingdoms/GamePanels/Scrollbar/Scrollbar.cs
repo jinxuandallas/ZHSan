@@ -160,13 +160,13 @@ namespace GamePanels.Scrollbar
             switch (scrollbarType)//根据不同类型重新设置框架可是范围和生成滚动条的材质
             {
                 case ScrollbarType.Horizontal:
-                    baseFrame.VisualFrame.Height -= ScrollButton.Height;
+                    //baseFrame.VisualFrame.Height -= ScrollButton.Height;
                     BarTexture = CreateScollbarTexture(baseFrame.VisualFrame.Width, ScrollButton.Height, BarColor);
                     BarPos.X = baseFrame.Position.X;//将滚动条位置设置放构造函数内可以使滚动条与框架的位置分离
                     BarPos.Y = baseFrame.Position.Y + baseFrame.VisualFrame.Height;
                     break;
                 case ScrollbarType.Vertical:
-                    baseFrame.VisualFrame.Width -= ScrollButton.Width;
+                    //baseFrame.VisualFrame.Width -= ScrollButton.Width;
                     BarTexture = CreateScollbarTexture(ScrollButton.Width, baseFrame.VisualFrame.Height, BarColor);
                     BarPos.X = baseFrame.Position.X + baseFrame.VisualFrame.Width;
                     BarPos.Y = baseFrame.Position.Y;

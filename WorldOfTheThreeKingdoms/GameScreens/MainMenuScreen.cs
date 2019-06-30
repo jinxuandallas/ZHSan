@@ -1864,6 +1864,15 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
             var contentCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "再试试这个\n试试送出试", new Vector2(50, 300), frame) { ViewTextColor = Color.Green };
+            var wraptext= new TextContent(new Vector2(0, 0), @"一、程序&剧本&功能
+- 新增粮道功能，体现后勤历史性。粮道铺设越长，维护所需资金越大，粮道周围才有粮食供给。
+- 新增单挑功能。可在设置页面自由选择势力武将，开启单挑。
+- 情懷DLC集合至游戏设置页，可游戏内一键选择不同mod。mod在程序MODs文件夹下增加子文件夹即可，更方便mod制作组和玩家加载使用。
+- 新增官职系统，支持根据声望值安排文官、武官、女官
+- 增加运输兵，支持运金钱和粮食，方便破城后继续用钱等情况，需研究科技支持。
+- 修复特殊兵种触发概率", frame, Color.DarkBlue);
+            //wraptext.AutoWrap();
+            frame.AddContentContorl(wraptext);
             contentCheckBox.OnButtonPress += (sender, e) =>
               {
                   var bt = (CheckBox)sender;

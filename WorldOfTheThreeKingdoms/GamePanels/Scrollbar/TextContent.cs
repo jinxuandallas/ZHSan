@@ -29,8 +29,15 @@ namespace GamePanels.Scrollbar
         /// </summary>
         public Color color { get; set; }
         public float Alpha { get; set; }
+        public SpriteFont Font;
+        public bool AutoWrap = true;
         public void DrawToCanvas(SpriteBatch batch)
         {
+            if (AutoWrap)
+            {
+                //AutoWrapText();
+                //baseFrame.ReCalcuateCanvasSize();
+            }
             CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, color * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
 
         }
@@ -51,7 +58,7 @@ namespace GamePanels.Scrollbar
         /// <param name="textColor">文本的颜色</param>
         /// <param name="scale">文本的缩放倍数</param>
         /// <param name="depth">深度</param>
-        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0, string id = null, string name = null)
+        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0, string id = null, string name = null,SpriteFont font=null)
         {
             ID = id;
             Name = name;
@@ -62,11 +69,20 @@ namespace GamePanels.Scrollbar
             Depth = depth;
             Alpha = 1f;
             color = textColor ?? Color.White;
+            Font = font ?? Session.Current.Font;
+            if (AutoWrap)
+                AutoWrapText();
         }
 
         public void UpdateCanvas()
         {
 
+        }
+
+        public void AutoWrapText()
+        {
+            if (OffsetPos.X < baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width)
+                Text=CacheManager.AutoWrap(Font, Text, OffsetPos, baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width - OffsetPos.X, Scale);
         }
     }
 }
