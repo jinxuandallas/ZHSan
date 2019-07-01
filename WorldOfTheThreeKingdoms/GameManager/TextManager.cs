@@ -152,10 +152,18 @@ namespace GameManager
             //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
         }
 
-        public static string HandleAutoWrap(string text, FontPair pair, Vector2 pos, float lineWidth, float scale)
+        /// <summary>
+        /// 将文字处理成自动换行的形式
+        /// </summary>
+        /// <param name="text">要处理的文字</param>
+        /// <param name="pair">FontPair</param>
+        /// <param name="lineWidth">行宽度</param>
+        /// <param name="scale">缩放倍数</param>
+        /// <returns></returns>
+        public static string HandleAutoWrap(string text, FontPair pair, float lineWidth, float scale)
         {
             Bounds bound;
-            string autoWrapText = null;
+            string autoWrapText = null;//换行后的文字
             if (font == null)
             {
                 Init(pair.Name, pair.Size);
@@ -165,8 +173,8 @@ namespace GameManager
 
             var texs = text.Split('\n');
 
-            int currentIndex;
-            string currentLine;
+            int currentIndex;//指向在一行文字内当前指向的处理到第几个字的索引
+            string currentLine;//当前行需判断的文字
             for (int i = 0; i < texs.Length; i++)
             {
                 currentLine = null;
@@ -174,24 +182,19 @@ namespace GameManager
                 currentIndex = 0;
                 for (int j = 0; j < te.Length; j++)
                 {
-                    
-                    currentLine = te.Substring(currentIndex, j-currentIndex + 1);
-                    bound = font.CalcStringBounds(currentLine.ToString(), pos + new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
-                    if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
-                    {
-                        bound.X2 = bound.X + bound.Width * scale;
-                        bound.Y2 = bound.Y + bound.Height * scale;
-                    }
 
+                    currentLine = te.Substring(currentIndex, j - currentIndex + 1);//取出当前索引位置前的所有文字用于判断这些文字是否超过行宽度
+                    bound = font.CalcStringBounds(currentLine.ToString(), new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
 
-                    if (bound.Width > lineWidth)
+                    if (bound.Width * scale > lineWidth)//如果当前这些文字超过行宽的
                     {
                         autoWrapText += (currentLine.Substring(0, currentLine.Length - 1) + '\n');//换行，并将当前行所有文字存入修改后的自动换行变量中
                         currentIndex = j;
+                        j--;//当前的字超过行宽度，需要倒回去一个字开始继续处理
                     }
                 }
 
-                autoWrapText += (currentLine + '\n');
+                autoWrapText += (currentLine + '\n');//将没有超界的文字加入总文字内
             }
             return autoWrapText;
         }

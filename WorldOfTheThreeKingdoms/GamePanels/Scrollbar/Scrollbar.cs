@@ -97,11 +97,11 @@ namespace GamePanels.Scrollbar
         /// <summary>
         /// 滚动条按钮的材质
         /// </summary>
-        protected Texture2D ButtonTexture;
+        public  Texture2D ButtonTexture;
         /// <summary>
         /// 滚动条的材质
         /// </summary>
-        protected Texture2D BarTexture;
+        public Texture2D BarTexture;
         /// <summary>
         /// 是否可见
         /// </summary>

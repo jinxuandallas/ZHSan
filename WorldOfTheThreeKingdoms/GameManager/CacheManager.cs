@@ -666,14 +666,24 @@ namespace GameManager
             return bounds;
         }
 
-        public static string AutoWrap(SpriteFont font,string text,Vector2 pos,float lineWidth,float scale, bool checkTradition = false, bool upload = false)
+        /// <summary>
+        /// 将文字处理成自动换行
+        /// </summary>
+        /// <param name="font">字体</param>
+        /// <param name="text">要处理的文字</param>
+        /// <param name="lineWidth">行宽度</param>
+        /// <param name="scale">缩放倍数</param>
+        /// <param name="checkTradition"></param>
+        /// <param name="upload"></param>
+        /// <returns></returns>
+        public static string AutoWrap(SpriteFont font,string text,float lineWidth,float scale, bool checkTradition = false, bool upload = false)
         {
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);
                 //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
-                return TextManager.HandleAutoWrap(text, FontPair, pos, lineWidth, scale);
+                return TextManager.HandleAutoWrap(text, FontPair, lineWidth, scale);
             }
 
             return null;

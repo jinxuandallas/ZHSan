@@ -30,14 +30,12 @@ namespace GamePanels.Scrollbar
         public Color color { get; set; }
         public float Alpha { get; set; }
         public SpriteFont Font;
+        /// <summary>
+        /// 是否自动换行
+        /// </summary>
         public bool AutoWrap = false;
         public void DrawToCanvas(SpriteBatch batch)
         {
-            if (AutoWrap)
-            {
-                //AutoWrapText();
-                //baseFrame.ReCalcuateCanvasSize();
-            }
             CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, OffsetPos, color * Alpha, 0f, Vector2.Zero, Scale, SpriteEffects.None, Depth);
 
         }
@@ -82,8 +80,8 @@ namespace GamePanels.Scrollbar
 
         public void AutoWrapText()
         {
-            if (OffsetPos.X < baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width)
-                Text=CacheManager.AutoWrap(Font, Text, OffsetPos, baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width - OffsetPos.X, Scale);
+            if (OffsetPos.X < baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width)//自动换行以当前可视框架为范围，超过框架范围则无法自动换行
+                Text=CacheManager.AutoWrap(Font, Text, baseFrame.VisualFrame.X + baseFrame.VisualFrame.Width - OffsetPos.X, Scale);
         }
     }
 }
