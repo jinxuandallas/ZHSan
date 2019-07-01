@@ -152,7 +152,7 @@ namespace GameManager
             //Session.Current.SpriteBatch.Draw(font.Texture, pos, null, color, 0f, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, depth == null ? 0 : (float)depth);
         }
 
-        public static string HandleAutoWrap(string text,FontPair pair, Vector2 pos,float lineWidth,float scale)
+        public static string HandleAutoWrap(string text, FontPair pair, Vector2 pos, float lineWidth, float scale)
         {
             Bounds bound;
             string autoWrapText = null;
@@ -166,7 +166,7 @@ namespace GameManager
             var texs = text.Split('\n');
 
             float textWidth;
-            string currentLine=null;
+            string currentLine = null;
             for (int i = 0; i < texs.Length; i++)
             {
                 textWidth = 0;
@@ -175,6 +175,7 @@ namespace GameManager
 
                 for (int j = 0; j < te.Length; j++)
                 {
+
                     bound = font.CalcStringBounds(te[j].ToString(), pos + new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
                     if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
                     {
@@ -182,7 +183,10 @@ namespace GameManager
                         bound.Y2 = bound.Y + bound.Height * scale;
                     }
 
-                    textWidth += bound.Width;
+                    if (te[j] < 128)
+                        textWidth += bound.Width;
+                    else
+                        textWidth += pair.Size * scale;
                     if (textWidth > lineWidth)
                     {
                         autoWrapText += (currentLine + '\n');//换行，并将当前行所有文字存入修改后的自动换行变量中

@@ -115,7 +115,7 @@ namespace GamePanels.Scrollbar
         /// <summary>
         /// 背景的透明度
         /// </summary>
-        public float BackgroundAlpha=1f;
+        public float BackgroundAlpha = 1f;
         /// <summary>
         /// 绘制画布的颜色
         /// </summary>
@@ -269,7 +269,7 @@ namespace GamePanels.Scrollbar
                     HasHorizontalScrollbar = true;
                     Scrollbars.Add(new Scrollbar(this, ScrollbarType.Horizontal));
                 }
-                else
+                else if (HasHorizontalScrollbar && CanvasWidth <= VisualFrame.Width)
                 {
                     HasHorizontalScrollbar = false;
                     Scrollbars.Remove(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Horizontal).FirstOrDefault());
@@ -280,7 +280,7 @@ namespace GamePanels.Scrollbar
                     HasVerticalScrollbar = true;
                     Scrollbars.Add(new Scrollbar(this));
                 }
-                else
+                else if (HasVerticalScrollbar && CanvasHeight <= VisualFrame.Height)
                 {
                     HasVerticalScrollbar = false;
                     Scrollbars.Remove(Scrollbars.Where(sb => sb.scrollbarType == ScrollbarType.Vertical).FirstOrDefault());

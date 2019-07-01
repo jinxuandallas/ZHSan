@@ -30,7 +30,7 @@ namespace GamePanels.Scrollbar
         public Color color { get; set; }
         public float Alpha { get; set; }
         public SpriteFont Font;
-        public bool AutoWrap = true;
+        public bool AutoWrap = false;
         public void DrawToCanvas(SpriteBatch batch)
         {
             if (AutoWrap)
@@ -58,7 +58,7 @@ namespace GamePanels.Scrollbar
         /// <param name="textColor">文本的颜色</param>
         /// <param name="scale">文本的缩放倍数</param>
         /// <param name="depth">深度</param>
-        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor, float scale = 1f, float depth = 0, string id = null, string name = null,SpriteFont font=null)
+        public TextContent(Vector2 offsetPos, string text, Frame baseframe, Color? textColor,bool autoWrap=false, float scale = 1f, float depth = 0, string id = null, string name = null,SpriteFont font=null)
         {
             ID = id;
             Name = name;
@@ -70,6 +70,7 @@ namespace GamePanels.Scrollbar
             Alpha = 1f;
             color = textColor ?? Color.White;
             Font = font ?? Session.Current.Font;
+            AutoWrap = autoWrap;
             if (AutoWrap)
                 AutoWrapText();
         }
