@@ -673,7 +673,7 @@ namespace GameManager
                 text = CheckTextCache(font, text, checkTradition, upload);
                 //Session.Current.SpriteBatch.DrawString(font, text, pos * Scale, color, rotation, origin, scale * Scale, effects, layerDepth);
 
-                return TextManager.HandleAutoWrap(text, FontPair, pos, lineWidth-5, scale);
+                return TextManager.HandleAutoWrap(text, FontPair, pos, lineWidth, scale);
             }
 
             return null;

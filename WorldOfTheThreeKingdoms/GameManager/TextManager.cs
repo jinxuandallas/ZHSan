@@ -165,36 +165,30 @@ namespace GameManager
 
             var texs = text.Split('\n');
 
-            float textWidth;
-            string currentLine = null;
+            int currentIndex;
+            string currentLine;
             for (int i = 0; i < texs.Length; i++)
             {
-                textWidth = 0;
                 currentLine = null;
                 var te = texs[i];
-
+                currentIndex = 0;
                 for (int j = 0; j < te.Length; j++)
                 {
-
-                    bound = font.CalcStringBounds(te[j].ToString(), pos + new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
+                    
+                    currentLine = te.Substring(currentIndex, j-currentIndex + 1);
+                    bound = font.CalcStringBounds(currentLine.ToString(), pos + new Vector2(0, i * pair.Size * scale), new Vector2(scale, scale));
                     if (scale != 1f)   //当字体的缩放倍数不为一时，相应的字体范围也要乘以缩放倍数，字体范围才准确
                     {
                         bound.X2 = bound.X + bound.Width * scale;
                         bound.Y2 = bound.Y + bound.Height * scale;
                     }
 
-                    if (te[j] < 128)
-                        textWidth += bound.Width;
-                    else
-                        textWidth += pair.Size * scale;
-                    if (textWidth > lineWidth)
+
+                    if (bound.Width > lineWidth)
                     {
-                        autoWrapText += (currentLine + '\n');//换行，并将当前行所有文字存入修改后的自动换行变量中
-                        currentLine = te[j].ToString();
-                        textWidth = 0;
+                        autoWrapText += (currentLine.Substring(0, currentLine.Length - 1) + '\n');//换行，并将当前行所有文字存入修改后的自动换行变量中
+                        currentIndex = j;
                     }
-                    else
-                        currentLine += te[j].ToString();
                 }
 
                 autoWrapText += (currentLine + '\n');
