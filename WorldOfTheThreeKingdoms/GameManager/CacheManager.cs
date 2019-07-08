@@ -675,7 +675,7 @@ namespace GameManager
         /// <param name="scale">缩放倍数</param>
         /// <param name="checkTradition"></param>
         /// <param name="upload"></param>
-        /// <returns></returns>
+        /// <returns>返回经过自动换行处理过的文字</returns>
         public static string AutoWrap(SpriteFont font,string text,float lineWidth,float scale, bool checkTradition = false, bool upload = false)
         {
             if (!String.IsNullOrEmpty(text))
