@@ -1870,7 +1870,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
 - 情懷DLC集合至游戏设置页，可游戏内一键选择不同mod。mod在程序MODs文件夹下增加子文件夹即可，更方便mod制作组和玩家加载使用。
 - 新增官职系统，支持根据声望值安排文官、武官、女官
 - 增加运输兵，支持运金钱和粮食，方便破城后继续用钱等情况，需研究科技支持。
-- 修复特殊兵种触发概率", frame, Color.DarkBlue,true,0.6f);
+- 修复特殊兵种触发概率", frame, Color.DarkBlue,true);
             //wraptext.AutoWrap();
             frame.AddContentContorl(wraptext);
             frame.ReCalcuateCanvasSize();

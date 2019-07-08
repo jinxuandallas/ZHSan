@@ -129,7 +129,7 @@ namespace GamePanels
         /// 材质的背景色
         /// </summary>
         public Color color { get; set; }
-        
+
         /// <summary>
         /// 根据是否选择过经过控件决定要显示的材质矩形
         /// </summary>
@@ -197,7 +197,7 @@ namespace GamePanels
         /// <param name="frame">包含控件的上级框架</param>
         /// <param name="offsettext"></param>
         /// <param name="id"></param>
-        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null,Color? textureColor=null) : this(path, name, text, pos)
+        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null, Color? textureColor = null) : this(path, name, text, pos)
         {
             baseFrame = frame;
             ID = id;
@@ -347,7 +347,8 @@ namespace GamePanels
             ViewTextColor = cbSetting.ViewTextColor ?? ViewTextColor;
             ViewTextColorMouseOver = cbSetting.ViewTextColorMouseOver ?? ViewTextColorMouseOver;
             Scale = cbSetting.Scale ?? Scale;
-            Draw(cbSetting.basPos, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
+            cbSetting.basPos = cbSetting.basPos ?? new Vector2(0, 0);
+            Draw(Position + cbSetting.basPos, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
         }
 
         /// <summary>
