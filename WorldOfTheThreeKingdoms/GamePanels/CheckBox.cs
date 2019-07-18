@@ -366,7 +366,8 @@ namespace GamePanels
             ViewTextColor = cbSetting.ViewTextColor ?? ViewTextColor;
             ViewTextColorMouseOver = cbSetting.ViewTextColorMouseOver ?? ViewTextColorMouseOver;
             Scale = cbSetting.Scale ?? Scale;
-            Draw(cbSetting.basPos, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
+            cbSetting.basPos = cbSetting.basPos ?? new Vector2(0, 0);
+            Draw(Position + cbSetting.basPos, Color.White * Alpha, 1f, null, cbSetting.Offset, cbSetting.ViewFont);
         }
 
         /// <summary>
