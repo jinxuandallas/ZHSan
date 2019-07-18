@@ -619,7 +619,7 @@ namespace GameManager
         /// <returns>返回文字范围的矩形列表</returns>
         public static List<Bounds> DrawStringReturnBounds(SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
         {
-            List<Bounds> bounds = null;
+            List<Bounds> bounds = new List<Bounds>();
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);
@@ -632,7 +632,7 @@ namespace GameManager
 
         public static List<Bounds> DrawStringReturnBounds(SpriteBatch batch,SpriteFont font, string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth, bool checkTradition = false, bool upload = false)
         {
-            List<Bounds> bounds = null;
+            List<Bounds> bounds = new List<Bounds>();
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);
@@ -655,7 +655,7 @@ namespace GameManager
         /// <returns></returns>
         public static List<Bounds> CalculateTextBounds(SpriteFont font, string text, Vector2 pos, float scale,  bool checkTradition = false, bool upload = false)
         {
-            List<Bounds> bounds = null;
+            List<Bounds> bounds = new List<Bounds>();
             if (!String.IsNullOrEmpty(text))
             {
                 text = CheckTextCache(font, text, checkTradition, upload);

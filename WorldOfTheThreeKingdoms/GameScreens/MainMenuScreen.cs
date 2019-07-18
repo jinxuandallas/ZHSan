@@ -1844,7 +1844,7 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             };
             btSettingList.Add(btOne);
 
-            #region 测试
+            #region 测试frame
             btCheckBoxList = new List<CheckBox>();
             var btCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "试试吧\n试试就试试", new Vector2(left + 300, heightBase + height * 1.8f));
             btCheckBox.OnButtonPress += (sender, e) =>
@@ -1853,6 +1853,18 @@ namespace WorldOfTheThreeKingdoms.GameScreens
                 bt.Selected = !bt.Selected;
             };
             btCheckBoxList.Add(btCheckBox);
+
+            var btCheckBox1 = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "", new Vector2(left + 100, heightBase + height * 2.8f));
+            btCheckBox1.OnButtonPress += (sender, e) =>
+            {
+                var bt = (CheckBox)sender;
+                bt.Selected = !bt.Selected;
+            };
+            btCheckBox1.AlignTexts.Add(new AlignText(new Vector2(0, 0), "1666321"));
+            btCheckBox1.AlignTexts.Add(new AlignText(new Vector2(100, 0), ""));
+            btCheckBox1.AlignTexts.Add(new AlignText(new Vector2(250, 0), "rrref"));
+            btCheckBoxList.Add(btCheckBox1);
+
 
             //frame = new Frame(new Vector2(50, 50), new Rectangle(0, 0, 300, 300) , @"Content\Textures\Resources\Start\TextBox-Big.png");
             frame = new Frame(new Vector2(50, 50), new Rectangle(0, 0, 300, 300), null);
@@ -1864,16 +1876,16 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             frame.AddContentContorl(new TextContent(new Vector2(200, 200), "试试这个再试试是是是", frame, Color.Red));
             frame.AddContentContorl(new TextureContent(new Vector2(30, 30), @"Content\Textures\Resources\Start\ExitGame.png", frame, 1.7f));
             var contentCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "再试试这个\n试试送出试", new Vector2(50, 300), frame) { ViewTextColor = Color.Green };
-            var wraptext= new TextContent(new Vector2(50, 0), @"一、程序&剧本&功能
-- 新增粮道功能，体现后勤历史性。粮道铺设越长，维护所需资金越大，粮道周围才有粮食供给。
-- 新增单挑功能。可在设置页面自由选择势力武将，开启单挑。
-- 情懷DLC集合至游戏设置页，可游戏内一键选择不同mod。mod在程序MODs文件夹下增加子文件夹即可，更方便mod制作组和玩家加载使用。
-- 新增官职系统，支持根据声望值安排文官、武官、女官
-- 增加运输兵，支持运金钱和粮食，方便破城后继续用钱等情况，需研究科技支持。
-- 修复特殊兵种触发概率", frame, Color.DarkBlue,true,0.6f);
-            //wraptext.AutoWrap();
-            frame.AddContentContorl(wraptext);
-            frame.ReCalcuateCanvasSize();
+            //            var wraptext= new TextContent(new Vector2(50, 0), @"一、程序&剧本&功能
+            //- 新增粮道功能，体现后勤历史性。粮道铺设越长，维护所需资金越大，粮道周围才有粮食供给。
+            //- 新增单挑功能。可在设置页面自由选择势力武将，开启单挑。
+            //- 情懷DLC集合至游戏设置页，可游戏内一键选择不同mod。mod在程序MODs文件夹下增加子文件夹即可，更方便mod制作组和玩家加载使用。
+            //- 新增官职系统，支持根据声望值安排文官、武官、女官
+            //- 增加运输兵，支持运金钱和粮食，方便破城后继续用钱等情况，需研究科技支持。
+            //- 修复特殊兵种触发概率", frame, Color.DarkBlue,true,0.6f);
+            //            //wraptext.AutoWrap();
+            //            frame.AddContentContorl(wraptext);
+            //frame.ReCalcuateCanvasSize();
             contentCheckBox.OnButtonPress += (sender, e) =>
               {
                   var bt = (CheckBox)sender;
@@ -1884,6 +1896,27 @@ namespace WorldOfTheThreeKingdoms.GameScreens
             frame.AddContentContorl(new ButtonTexture(@"Content\Textures\Resources\Start\ReadyButton", "Cancel", new Vector2(150, 150), frame));
             frame.AddContentContorl(new TextContent(new Vector2(300, 400), "看看这个怎么样", frame, Color.BlueViolet));
 
+            var alignCheckBox = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "", new Vector2(30, 170), frame) { ViewTextColor = Color.Blue };
+            alignCheckBox.OnButtonPress += (sender, e) =>
+            {
+                var bt = (CheckBox)sender;
+                bt.Selected = !bt.Selected;
+            };
+            alignCheckBox.AlignTexts.Add(new AlignText(new Vector2(0, 0), "1312321"));
+            alignCheckBox.AlignTexts.Add(new AlignText(new Vector2(100, 0), "试试这个"));
+            alignCheckBox.AlignTexts.Add(new AlignText(new Vector2(250, 0), "afdsef"));
+            frame.AddContentContorl(alignCheckBox);
+
+            var alignCheckBox2 = new CheckBox(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", "", new Vector2(30, 200), frame) { ViewTextColor = Color.Blue };
+            alignCheckBox2.OnButtonPress += (sender, e) =>
+            {
+                var bt = (CheckBox)sender;
+                bt.Selected = !bt.Selected;
+            };
+            alignCheckBox2.AlignTexts.Add(new AlignText(new Vector2(0, 0), "896432"));
+            alignCheckBox2.AlignTexts.Add(new AlignText(new Vector2(100, 0), "再试试"));
+            alignCheckBox2.AlignTexts.Add(new AlignText(new Vector2(250, 0), "lj;jkoo"));
+            frame.AddContentContorl(alignCheckBox2);
             #endregion
 
             btOne = new ButtonTexture(@"Content\Textures\Resources\Start\CheckBox", "CheckBox", new Vector2(left + 300, heightBase))

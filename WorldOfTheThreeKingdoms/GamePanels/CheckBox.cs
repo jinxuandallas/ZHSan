@@ -12,6 +12,20 @@ using GamePanels.Scrollbar;
 
 namespace GamePanels
 {
+    /// <summary>
+    /// 要对齐的文本参数
+    /// </summary>
+    public class AlignText
+    {
+        public Vector2 Offset;
+        public string Text;
+
+        public AlignText(Vector2 offset, string text)
+        {
+            Offset = offset;
+            Text = text;
+        }
+    }
     public struct CheckBoxSetting
     {
         public SpriteFont ViewFont;
@@ -129,7 +143,7 @@ namespace GamePanels
         /// 材质的背景色
         /// </summary>
         public Color color { get; set; }
-        
+
         /// <summary>
         /// 根据是否选择过经过控件决定要显示的材质矩形
         /// </summary>
@@ -168,6 +182,11 @@ namespace GamePanels
         }
 
         /// <summary>
+        /// 要对齐的文本列表
+        /// </summary>
+        public List<AlignText> AlignTexts = new List<AlignText>();
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="path">包含材质的路径</param>
@@ -197,7 +216,7 @@ namespace GamePanels
         /// <param name="frame">包含控件的上级框架</param>
         /// <param name="offsettext"></param>
         /// <param name="id"></param>
-        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null,Color? textureColor=null) : this(path, name, text, pos)
+        public CheckBox(string path, string name, string text, Vector2 pos, Frame frame, Vector2? offsettext = null, string id = null, Color? textureColor = null) : this(path, name, text, pos)
         {
             baseFrame = frame;
             ID = id;
@@ -375,6 +394,20 @@ namespace GamePanels
 
                 bounds.Add(bound);
 
+                if (AlignTexts.Count > 0)
+                {
+                    List<Bounds> b = new List<Bounds>();
+                    List<Bounds> _b;//处理Text为空的情况
+                    AlignTexts.ForEach(at =>
+                    {
+                        _b = CacheManager.DrawStringReturnBounds(viewFont ?? Session.Current.Font, at.Text, (basePos == null ? (Vector2)(Position + _offset + at.Offset) : (Vector2)(Position + basePos + _offset + at.Offset)) * DrawScale, (MouseOver || Selected) ? ViewTextColorMouseOver * Alpha : ViewTextColor * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, 0f);
+                        if (_b.Count > 0)//处理Text为空的情况
+                            b.Add(_b[0]);
+                    });
+                    //添加范围
+                    bounds.Add(new Bounds() { X = b.OrderBy(bb => bb.X).FirstOrDefault().X, Y = b.OrderBy(bb => bb.Y).FirstOrDefault().Y, X2 = b.OrderByDescending(bb => bb.X2).FirstOrDefault().X2, Y2 = b.OrderByDescending(bb => bb.Y2).FirstOrDefault().Y2 });
+                }
+
             }
 
         }
@@ -391,6 +424,20 @@ namespace GamePanels
 
                 bounds = CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, Text, (Vector2)(Position + _offsetText) * DrawScale, (MouseOver || Selected) ? ViewTextColorMouseOver * Alpha : ViewTextColor * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, Depth);
                 bounds.Add(new Bounds() { X = Position.X, Y = Position.Y, X2 = Position.X + ((Rectangle)cbRectangle).Width, Y2 = Position.Y + ((Rectangle)cbRectangle).Height });
+
+                if (AlignTexts.Count > 0)
+                {
+                    List<Bounds> b = new List<Bounds>();
+                    List<Bounds> _b;//处理Text为空的情况
+                    AlignTexts.ForEach(at =>
+                    {
+                        _b = CacheManager.DrawStringReturnBounds(batch, Session.Current.Font, at.Text, (Vector2)(Position + _offsetText + at.Offset) * DrawScale, (MouseOver || Selected) ? ViewTextColorMouseOver * Alpha : ViewTextColor * Alpha, 0f, Vector2.Zero, Scale * ViewTextScale, SpriteEffects.None, Depth);
+                        if (_b.Count > 0)//处理Text为空的情况
+                            b.Add(_b[0]);
+                    });
+                    //添加范围
+                    bounds.Add(new Bounds() { X = b.OrderBy(bb => bb.X).FirstOrDefault().X, Y = b.OrderBy(bb => bb.Y).FirstOrDefault().Y, X2 = b.OrderByDescending(bb => bb.X2).FirstOrDefault().X2, Y2 = b.OrderByDescending(bb => bb.Y2).FirstOrDefault().Y2 });
+                }
 
             }
         }
